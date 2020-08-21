@@ -5,7 +5,7 @@ $_SESSION = array();
 <!DOCTYPE html>
 <html>
 <head>
-<title>Login</title>
+<title>Test</title>
 </head>
 <body>
 <form action="logincheck.php" method="post">
