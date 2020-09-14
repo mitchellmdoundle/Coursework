@@ -3,9 +3,8 @@ session_start();
 try{
     include_once("connection.php");
     array_map("htmlspecialchars", $_POST);
-    $stmt = $conn->prepare("SELECT * FROM user WHERE Forename=:forename AND Surname =:surname");
-    $stmt->bindParam(':forename', $_POST["forename"]);
-    $stmt->bindParam(':surname', $_POST["surname"]);
+    $stmt = $conn->prepare("SELECT * FROM users WHERE Username=:username");
+    $stmt->bindParam(':username', $_POST["username"]);
     $stmt->execute();
     while ($row = $stmt->fetch(PDO::FETCH_ASSOC))
     {
@@ -14,12 +13,9 @@ try{
         $_SESSION["loggedinuser"]=$row["UserID"];
         $_SESSION["Role"]=$row["Role"];
         if ($row['Role']==0){
-            header('Location: order.php');   
+            header('Location: blank.php');   
         }
         else if ($row['Role']==1){
-            header('Location: showorders.php');
-        }
-        else if ($row['Role']==2){
             header('Location: users.php');
         }
     }

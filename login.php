@@ -5,12 +5,10 @@ $_SESSION = array();
 <!DOCTYPE html>
 <html>
 <head>
-<title>Test2</title>
 </head>
 <body>
 <form action="logincheck.php" method="post">
-  Forename:<input type="text" name="forename"><br>
-  Surname:<input type="text" name="surname"><br>
+  Username:<input type="text" name="username"><br>
   Password:<input type="password" name="passwd"><br>
   <input type="submit" value="Login">
 </form>
