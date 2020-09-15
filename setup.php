@@ -5,13 +5,22 @@ $one = $conn->prepare("DROP TABLE IF EXISTS users;
 CREATE TABLE users (
     UserID INT(4) UNSIGNED AUTO_INCREMENT PRIMARY KEY,
     Username VARCHAR(20) NOT NULL,
-    Email VARCHAR(20) NOT NULL,
+    Email VARCHAR(40) NOT NULL,
     Password VARCHAR(20) NOT NULL,
     Role TINYINT(1) NOT NULL DEFAULT(0)
 );
 ");
 $one->execute();
 $one->closeCursor();
+
+$pop = $conn->prepare('
+INSERT INTO users(UserID,Username,Email,Password,Role)
+VALUES 
+    (null, "MatthewMitchell", "MattEmail@email.com", "banana1", 1),
+    (null, "NoahCooper", "NoahEmail@email.com", "apple1", 0)
+    ');
+$pop->execute();
+$pop->closeCursor();
 
 $two = $conn->prepare("DROP TABLE IF EXISTS characters;
 CREATE TABLE characters (
@@ -53,7 +62,7 @@ CREATE TABLE characters (
     TempHP INT(2),
     MaxHPdiff INT(2),
     Alignment VARCHAR(20), 
-    Inspiration INT(1),
+    Inspiration TINYINT(1),
     Personality VARCHAR(1000),
     Ideals VARCHAR(1000),
     Bonds VARCHAR(1000),
@@ -72,6 +81,25 @@ CREATE TABLE characters (
 ");
 $two->execute();
 $two->closeCursor();
+
+$three = $conn->prepare("DROP TABLE IF EXISTS spells;
+CREATE TABLE spells (
+    SpellID INT(4) UNSIGNED AUTO_INCREMENT PRIMARY KEY,
+    Name VARCHAR(20),
+    Level INT(1),
+    Description VARCHAR(2000),
+    Duration VARCHAR(40),
+    Verbal INT(1),
+    Somatic INT(1),
+    Material VARCHAR(200),
+    RangeofSpell INT(6),
+    Splash VARCHAR(30),
+    Conc TINYINT(1),
+    Ritual TINYINT(1)
+);
+");
+$three->execute();
+$three->closeCursor();
 
 echo("done");
 $conn=null;
