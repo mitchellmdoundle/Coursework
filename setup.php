@@ -1,7 +1,7 @@
 <?php
-header( "Location: http://localhost/Coursework/login.php" );
+//header( "Location: http://localhost/Coursework/login.php" );
 include_once ("connection.php");
-$stmt = $conn->prepare("DROP TABLE IF EXISTS users;
+$one = $conn->prepare("DROP TABLE IF EXISTS users;
 CREATE TABLE users (
     UserID INT(4) UNSIGNED AUTO_INCREMENT PRIMARY KEY,
     Username VARCHAR(20) NOT NULL,
@@ -10,10 +10,10 @@ CREATE TABLE users (
     Role TINYINT(1) NOT NULL DEFAULT(0)
 );
 ");
-$stmt->execute();
-$stmt->closeCursor();
+$one->execute();
+$one->closeCursor();
 
-$stmt = $conn->prepare("DROP TABLE IF EXISTS characters;
+$two = $conn->prepare("DROP TABLE IF EXISTS characters;
 CREATE TABLE characters (
     CharID INT(6) UNSIGNED AUTO_INCREMENT PRIMARY KEY,
     UserID INT(4) UNSIGNED NOT NULL,
@@ -22,33 +22,33 @@ CREATE TABLE characters (
     SubclassID INT(2),
     BackgroundID INT(2),
     SubRaceID INT(2),
-    Strength INT(2),
-    Dexterity INT(2),
-    Constitution INT(2),
-    Intelligence INT(2),
-    Wisdom INT(2),
-    Charisma INT(2),
-    Dsavespass INT(1),
-    Dsavesfail INT(1),
+    Strength INT(2) DEFAULT(10),
+    Dexterity INT(2) DEFAULT(10),
+    Constitution INT(2) DEFAULT(10),
+    Intelligence INT(2) DEFAULT(10),
+    Wisdom INT(2) DEFAULT(10),
+    Charisma INT(2) DEFAULT(10),
+    Dsavespass INT(1) DEFAULT(0),
+    Dsavesfail INT(1) DEFAULT(0),
     ArmorWorn VARCHAR(30),
-    Athletics INT(1),
-    Acrobatics INT(1),
-    Sleight of Hand INT(1),
-    Stealth INT(1),
-    Arcana INT(1),
-    History INT(1),
-    Investigation INT(1),
-    Nature INT(1),
-    Religion INT(1),
-    Animal Handling INT(1),
-    Insight INT(1),
-    Medicine INT(1),
-    Perception INT(1),
-    Survival INT(1),
-    Deception INT(1),
-    Intimidation INT(1),
-    Performance INT(1),
-    Persuasion INT(1),
+    Athletics INT(1) DEFAULT(0),
+    Acrobatics INT(1) DEFAULT(0),
+    SleightofHand INT(1) DEFAULT(0),
+    Stealth INT(1) DEFAULT(0),
+    Arcana INT(1) DEFAULT(0),
+    History INT(1) DEFAULT(0),
+    Investigation INT(1) DEFAULT(0),
+    Nature INT(1) DEFAULT(0),
+    Religion INT(1) DEFAULT(0),
+    AnimalHandling INT(1) DEFAULT(0),
+    Insight INT(1) DEFAULT(0),
+    Medicine INT(1) DEFAULT(0),
+    Perception INT(1) DEFAULT(0),
+    Survival INT(1) DEFAULT(0),
+    Deception INT(1) DEFAULT(0),
+    Intimidation INT(1) DEFAULT(0),
+    Performance INT(1) DEFAULT(0),
+    Persuasion INT(1) DEFAULT(0),
     CurrentHP INT(4),
     TempHP INT(2),
     MaxHPdiff INT(2),
@@ -67,11 +67,11 @@ CREATE TABLE characters (
     Eyes VARCHAR(20),
     Skin VARCHAR(20),
     Hair VARCHAR(20),
-    Notes  VARCHAR(2000),
+    Notes  VARCHAR(2000)
 );
 ");
-$stmt->execute();
-$stmt->closeCursor();
+$two->execute();
+$two->closeCursor();
 
 echo("done");
 $conn=null;
