@@ -87,6 +87,7 @@ CREATE TABLE spells (
     SpellID INT(4) UNSIGNED AUTO_INCREMENT PRIMARY KEY,
     Name VARCHAR(20),
     Level INT(1),
+    School VARCHAR(15),
     Description VARCHAR(2000),
     Duration VARCHAR(40),
     Verbal INT(1),
@@ -100,6 +101,24 @@ CREATE TABLE spells (
 ");
 $three->execute();
 $three->closeCursor();
+
+$four = $conn->prepare("DROP TABLE IF EXISTS tags;
+CREATE TABLE tags (
+    Tag VARCHAR(20) PRIMARY KEY
+);
+");
+$four->execute();
+$four->closeCursor();
+
+$five = $conn->prepare("DROP TABLE IF EXISTS spellhastags;
+CREATE TABLE spellhastags (
+    SpellID INT(4) UNSIGNED AUTO_INCREMENT PRIMARY KEY,
+    Tag VARCHAR(20)
+);
+");
+$five->execute();
+$five->closeCursor();
+
 
 echo("done");
 $conn=null;
