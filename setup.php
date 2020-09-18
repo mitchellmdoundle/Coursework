@@ -27,8 +27,6 @@ CREATE TABLE characters (
     CharID INT(6) UNSIGNED AUTO_INCREMENT PRIMARY KEY,
     UserID INT(4) UNSIGNED NOT NULL,
     CharName VARCHAR(20),
-    ClassID INT(2),
-    SubclassID INT(2),
     BackgroundID INT(2),
     SubRaceID INT(2),
     Strength INT(2) DEFAULT(10),
@@ -112,12 +110,32 @@ $four->closeCursor();
 
 $five = $conn->prepare("DROP TABLE IF EXISTS spellhastags;
 CREATE TABLE spellhastags (
-    SpellID INT(4) UNSIGNED AUTO_INCREMENT PRIMARY KEY,
+    SpellID INT(4) UNSIGNED PRIMARY KEY,
     Tag VARCHAR(20)
 );
 ");
 $five->execute();
 $five->closeCursor();
+
+$six = $conn->prepare("DROP TABLE IF EXISTS charhasspell;
+CREATE TABLE charhasspell (
+    CharID INT(6) UNSIGNED PRIMARY KEY,
+    SpellID INT(4) UNSIGNED,
+    Often TINYINT(1)
+);
+");
+$six->execute();
+$six->closeCursor();
+
+$seven = $conn->prepare("DROP TABLE IF EXISTS class;
+CREATE TABLE class (
+    CharID INT(6) UNSIGNED PRIMARY KEY,
+    SpellID INT(4) UNSIGNED,
+    Often TINYINT(1)
+);
+");
+$seven->execute();
+$seven->closeCursor();
 
 
 echo("done");
