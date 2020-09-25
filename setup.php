@@ -129,9 +129,13 @@ $six->closeCursor();
 
 $seven = $conn->prepare("DROP TABLE IF EXISTS class;
 CREATE TABLE class (
-    CharID INT(6) UNSIGNED PRIMARY KEY,
-    SpellID INT(4) UNSIGNED,
-    Often TINYINT(1)
+    ClassID INT(4) UNSIGNED AUTO_INCREMENT PRIMARY KEY,
+    ProfNum
+    Hitdie
+    Savingthrow1
+    Savingthrow2
+    Ritual
+    
 );
 ");
 $seven->execute();
