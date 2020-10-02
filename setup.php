@@ -28,7 +28,8 @@ CREATE TABLE characters (
     UserID INT(4) UNSIGNED NOT NULL,
     CharName VARCHAR(20),
     BackgroundID INT(2),
-    SubRaceID INT(2),
+    SubAncestryID INT(2),
+    Xp Int(4) DEFAULT(0),
     Strength INT(2) DEFAULT(10),
     Dexterity INT(2) DEFAULT(10),
     Constitution INT(2) DEFAULT(10),
@@ -84,7 +85,7 @@ $three = $conn->prepare("DROP TABLE IF EXISTS spells;
 CREATE TABLE spells (
     SpellID INT(4) UNSIGNED AUTO_INCREMENT PRIMARY KEY,
     Name VARCHAR(20),
-    Level INT(1),
+    Spelllevel INT(1),
     School VARCHAR(15),
     Description VARCHAR(2000),
     Duration VARCHAR(40),
@@ -130,17 +131,91 @@ $six->closeCursor();
 $seven = $conn->prepare("DROP TABLE IF EXISTS class;
 CREATE TABLE class (
     ClassID INT(4) UNSIGNED AUTO_INCREMENT PRIMARY KEY,
-    ProfNum
-    Hitdie
-    Savingthrow1
-    Savingthrow2
-    Ritual
-    
+    ProfNum INT(2),
+    Hitdie INT(2),
+    Savingthrow1 INT(1),
+    Savingthrow2 INT(1),
+    Ritual TINYINT(1)  
 );
 ");
 $seven->execute();
 $seven->closeCursor();
 
+$eight = $conn->prepare("DROP TABLE IF EXISTS subclass;
+CREATE TABLE subclass (
+    SubclassID INT(4) UNSIGNED AUTO_INCREMENT PRIMARY KEY,
+    Name VARCHAR (20)
+);
+");
+$eight->execute();
+$eight->closeCursor();
+
+$nine = $conn->prepare("DROP TABLE IF EXISTS charhasclass;
+CREATE TABLE charhasclass (
+    CharID INT(6) UNSIGNED PRIMARY KEY,
+    ClassID INT(4) UNSIGNED,
+    Level INT(4)
+);
+");
+$nine->execute();
+$nine->closeCursor();
+
+$ten = $conn->prepare("DROP TABLE IF EXISTS charhassubclass;
+CREATE TABLE charhassubclass (
+    CharID INT(6) UNSIGNED PRIMARY KEY,
+    SubclassID INT(4) UNSIGNED
+);
+");
+$ten->execute();
+$ten->closeCursor();
+
+$eleven = $conn->prepare("DROP TABLE IF EXISTS classhassubclass;
+CREATE TABLE classhassubclass (
+    ClassID INT(4) UNSIGNED PRIMARY KEY,
+    SubclassID INT(4) UNSIGNED
+);
+");
+$eleven->execute();
+$eleven->closeCursor();
+
+$twelve = $conn->prepare("DROP TABLE IF EXISTS classhasspells;
+CREATE TABLE classhasspells (
+    ClassID INT(4) UNSIGNED PRIMARY KEY,
+    SpellID INT(4) UNSIGNED
+);
+");
+$twelve->execute();
+$twelve->closeCursor();
+
+$thirteen = $conn->prepare("DROP TABLE IF EXISTS subclassfeatures;
+CREATE TABLE subclassfeatures (
+    SubclassID INT(4) UNSIGNED PRIMARY KEY,
+    Level INT(2) UNSIGNED,
+    Feature VARCHAR(3000) UNSIGNED
+);
+");
+$thirteen->execute();
+$thirteen->closeCursor();
+
+$fourteen = $conn->prepare("DROP TABLE IF EXISTS subancestryfeatures;
+CREATE TABLE subancestryfeatures (
+    SubAncestryID INT(2) UNSIGNED PRIMARY KEY,
+    Level INT(2) UNSIGNED,
+    Feature VARCHAR(3000) UNSIGNED
+);
+");
+$fourteen->execute();
+$fourteen->closeCursor();
+
+$fifteen = $conn->prepare("DROP TABLE IF EXISTS classfeatures;
+CREATE TABLE classfeatures (
+    ClassID INT(4) UNSIGNED PRIMARY KEY,
+    Level INT(2) UNSIGNED,
+    Feature VARCHAR(3000) UNSIGNED
+);
+");
+$fifteen->execute();
+$fifteen->closeCursor();
 
 echo("done");
 $conn=null;
