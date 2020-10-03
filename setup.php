@@ -172,7 +172,7 @@ $ten->closeCursor();
 $eleven = $conn->prepare("DROP TABLE IF EXISTS classhassubclass;
 CREATE TABLE classhassubclass (
     ClassID INT(4) UNSIGNED PRIMARY KEY,
-    SubclassID INT(4) UNSIGNED
+    SubclassID INT(4) UNSIGNED PRIMARY KEY
 );
 ");
 $eleven->execute();
@@ -216,6 +216,15 @@ CREATE TABLE classfeatures (
 ");
 $fifteen->execute();
 $fifteen->closeCursor();
+
+$sixteen = $conn->prepare("DROP TABLE IF EXISTS subclasshasspells;
+CREATE TABLE subclasshasspells (
+    SubclassID INT(4) UNSIGNED PRIMARY KEY,
+    SpellID INT(4) UNSIGNED
+);
+");
+$sixteen->execute();
+$sixteen->closeCursor();
 
 echo("done");
 $conn=null;
