@@ -191,7 +191,7 @@ $thirteen = $conn->prepare("DROP TABLE IF EXISTS subclassfeatures;
 CREATE TABLE subclassfeatures (
     SubclassID INT(4) UNSIGNED PRIMARY KEY,
     Level INT(2) UNSIGNED,
-    Feature VARCHAR(3000) UNSIGNED
+    Feature VARCHAR(3000)
 );
 ");
 $thirteen->execute();
@@ -201,7 +201,7 @@ $fourteen = $conn->prepare("DROP TABLE IF EXISTS subancestryfeatures;
 CREATE TABLE subancestryfeatures (
     SubAncestryID INT(2) UNSIGNED PRIMARY KEY,
     Level INT(2) UNSIGNED,
-    Feature VARCHAR(3000) UNSIGNED
+    Feature VARCHAR(3000)
 );
 ");
 $fourteen->execute();
@@ -211,7 +211,7 @@ $fifteen = $conn->prepare("DROP TABLE IF EXISTS classfeatures;
 CREATE TABLE classfeatures (
     ClassID INT(4) UNSIGNED PRIMARY KEY,
     Level INT(2) UNSIGNED,
-    Feature VARCHAR(3000) UNSIGNED
+    Feature VARCHAR(3000)
 );
 ");
 $fifteen->execute();
