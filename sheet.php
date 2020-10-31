@@ -6,13 +6,13 @@
 <body>
 <?php
 include_once('connection.php');
-$stmt = $conn->prepare("SELECT user.Forename as FN, user.Surname as SN, user.House as H, orders.OrderID as Orid, orders.Dateneeded as dateneeded FROM user 
-INNER JOIN orders ON orders.UserID= user.UserID 
-where Complete = 0
-ORDER BY Dateneeded ASC
+$stmt = $conn->prepare("SELECT characters.CharID, charhasspell.CharID
+FROM characters
+INNER JOIN charhasspell 
+ON characters.charID = charhasspell.CharID;
 ");
 $stmt->execute();
-echo("<br>");
+include_once('connection.php');
 
 ?>
 

@@ -14,3 +14,14 @@ $_SESSION = array();
 </form>
 </body>
 </html>
+<?php
+include_once('connection.php');
+$stmt = $conn->prepare("SELECT * FROM users");
+$stmt->execute();
+echo("<br>");
+echo("ID: Username, Email, Admin?, Password<br>");
+while ($row = $stmt->fetch(PDO::FETCH_ASSOC))
+{
+echo($row["UserID"].': '.$row["Username"].', '.$row["Email"].', '.$row["Role"].', '.$row["Password"]."<br>");
+}
+?>
