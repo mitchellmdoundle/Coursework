@@ -113,7 +113,8 @@ $four->closeCursor();
 $five = $conn->prepare("DROP TABLE IF EXISTS spellhastags;
 CREATE TABLE spellhastags (
     SpellID INT(4) UNSIGNED,
-    Tag VARCHAR(20)
+    Tag VARCHAR(20), 
+    PRIMARY KEY (SpellID, Tag)
 );
 ");
 $five->execute();
