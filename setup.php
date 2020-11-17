@@ -87,6 +87,7 @@ CREATE TABLE spells (
     Name VARCHAR(20),
     Spelllevel INT(1),
     School VARCHAR(15),
+    CastingTime VARCHAR(30),
     Description VARCHAR(2000),
     Duration VARCHAR(40),
     Verbal INT(1),
@@ -111,7 +112,7 @@ $four->closeCursor();
 
 $five = $conn->prepare("DROP TABLE IF EXISTS spellhastags;
 CREATE TABLE spellhastags (
-    SpellID INT(4) UNSIGNED PRIMARY KEY,
+    SpellID INT(4) UNSIGNED,
     Tag VARCHAR(20)
 );
 ");
@@ -225,6 +226,51 @@ CREATE TABLE subclasshasspells (
 ");
 $sixteen->execute();
 $sixteen->closeCursor();
+
+
+#SPELLS
+/*$spell = $conn->prepare("
+");
+$spell->execute();
+$spell->closeCursor();*/
+
+$spellone = $conn->prepare("INSERT INTO `spells` (`SpellID`, `Name`, `Spelllevel`, `School`, `CastingTime`, `Description`, `Duration`, `Verbal`, `Somatic`, `Material`, `RangeofSpell`, `Splash`, `Conc`, `Ritual`) VALUES (NULL, 'Fireball', '3', 'Evocation', '1 action', 'A bright streak flashes from your pointing finger to a point you choose within range and then blossoms with a low roar into an explosion of flame. Each creature in a 20-foot-radius sphere centered on that point must make a Dexterity saving throw. A target takes 8d6 fire damage on a failed save, or half as much damage on a successful one. The fire spreads around corners. It ignites flammable objects in the area that aren’t being worn or carried.', 'Instantaneous', '1', '1', 'A tiny ball of bat guano and sulfur', '150', '20ft radius sphere', '0', '0');
+");
+$spellone->execute();
+$spellone->closeCursor();
+
+$spelltwo = $conn->prepare("INSERT INTO `spells` (`SpellID`, `Name`, `Spelllevel`, `School`, `CastingTime`, `Description`, `Duration`, `Verbal`, `Somatic`, `Material`, `RangeofSpell`, `Splash`, `Conc`, `Ritual`) VALUES (NULL, 'Burning Hands', '1', 'Evocation', '1 action', 'As you hold your hands with thumbs touching and fingers spread, a thin sheet of flames shoots forth from your outstretched fingertips. Each creature in a 15-foot cone must make a Dexterity saving throw. A creature takes 3d6 fire damage on a failed save, or half as much damage on a successful one. The fire ignites any flammable objects in the area that aren’t being worn or carried.', 'Instantaneous', '1', '1', NULL, '-1', '15-foot cone', '0', '0');
+");
+$spelltwo->execute();
+$spelltwo->closeCursor();
+
+$spellthree = $conn->prepare("INSERT INTO `spells` (`SpellID`, `Name`, `Spelllevel`, `School`, `CastingTime`, `Description`, `Duration`, `Verbal`, `Somatic`, `Material`, `RangeofSpell`, `Splash`, `Conc`, `Ritual`) VALUES (NULL, 'Acid Splash', '0', 'Conjuration', '1 action', 'You hurl a bubble of acid. Choose one creature within range, or choose two creatures within range that are within 5 feet of each other. A target must succeed on a Dexterity saving throw or take 1d6 acid damage.', 'Instantaneous', '1', '1', NULL, '60', NULL, '0', '0');
+");
+$spellthree->execute();
+$spellthree->closeCursor();
+
+$spellfour = $conn->prepare("INSERT INTO `spells` (`SpellID`, `Name`, `Spelllevel`, `School`, `CastingTime`, `Description`, `Duration`, `Verbal`, `Somatic`, `Material`, `RangeofSpell`, `Splash`, `Conc`, `Ritual`) VALUES (NULL, 'Augury', '2', 'Divincation', '1 minute', 'By casting gem-inlaid sticks, rolling dragon bones, laying out ornate cards, or employing some other divining tool, you receive an omen from an otherworldly entity about the results of a specific course of action that you plan to take within the next 30 minutes. The DM chooses from the following possible omens:\r\n\r\n<br>Weal, for good results\r\n<br>Woe, for bad results\r\n<br>Weal and woe, for both good and bad results\r\n<br>Nothing, for results that aren\'t especially good or bad<br>\r\nThe spell doesn\'t take into account any possible circumstances that might change the outcome, such as the casting of additional spells or the loss or gain of a companion.\r\n\r\nIf you cast the spell two or more times before completing your next long rest, there is a cumulative 25 percent chance for each casting after the first that you get a random reading. The DM makes this roll in secret.', 'Instantaneous', '1', '0', NULL, '30', NULL, '0', '1');
+");
+$spellfour->execute();
+$spellfour->closeCursor();
+
+#TAGS
+/*$tag = $conn->prepare("
+");
+$tag->execute();
+$tag->closeCursor();*/
+
+$tags = $conn->prepare("INSERT INTO `tags` (`Tag`) VALUES ('Fire'), ('Healing'), ('AoE'), ('Damage');
+");
+$tags->execute();
+$tags->closeCursor();
+
+#GIVING SPELLS TAGS
+
+$spelltags = $conn->prepare("INSERT INTO `spellhastags` (`SpellID`, `Tag`) VALUES ('1', 'Fire'), ('2', 'Fire'), ('1', 'AoE');
+");
+$spelltags->execute();
+$spelltags->closeCursor();
 
 echo("done");
 $conn=null;
