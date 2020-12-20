@@ -23,6 +23,10 @@ $stmt->execute();
 while ($row = $stmt->fetch(PDO::FETCH_ASSOC))
 {
     echo("<tr><td>".$row['spellname']."</td><td>".$row['spelllevel']."</td><td>".$row['tag']."</td></tr>");
+    for ($x = 1; $x <= 3; $x++) 
+    {
+        echo "The number is: $x <br>";
+    }
 }
 ?>
 </table>
