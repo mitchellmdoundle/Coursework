@@ -17,7 +17,7 @@ try{
             $stmt->bindParam(':password', $_POST["passwd"]);
             $stmt->bindParam(':role', $role);
             $stmt->execute();
-            }
+    }
 catch(PDOException $e)
     {
         echo "error".$e->getMessage();

@@ -13,7 +13,7 @@ try{
         $_SESSION["loggedinuser"]=$row["UserID"];
         $_SESSION["Role"]=$row["Role"];
         if ($row['Role']==0){
-            header('Location: sheet.php');   
+            header('Location: selectchar.php');   
         }
         else if ($row['Role']==1){
             header('Location: users.php');
