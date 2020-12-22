@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
 <head>
-<title>Sheet</title>
+<title>Spells</title>
 </head>
 <body>
 <table>

@@ -250,7 +250,7 @@ $spellthree = $conn->prepare("INSERT INTO `spells` (`SpellID`, `Name`, `Spelllev
 $spellthree->execute();
 $spellthree->closeCursor();
 
-$spellfour = $conn->prepare("INSERT INTO `spells` (`SpellID`, `Name`, `Spelllevel`, `School`, `CastingTime`, `Description`, `Duration`, `Verbal`, `Somatic`, `Material`, `RangeofSpell`, `Splash`, `Conc`, `Ritual`) VALUES (NULL, 'Augury', '2', 'Divincation', '1 minute', 'By casting gem-inlaid sticks, rolling dragon bones, laying out ornate cards, or employing some other divining tool, you receive an omen from an otherworldly entity about the results of a specific course of action that you plan to take within the next 30 minutes. The DM chooses from the following possible omens:\r\n\r\n<br>Weal, for good results\r\n<br>Woe, for bad results\r\n<br>Weal and woe, for both good and bad results\r\n<br>Nothing, for results that aren\'t especially good or bad<br>\r\nThe spell doesn\'t take into account any possible circumstances that might change the outcome, such as the casting of additional spells or the loss or gain of a companion.\r\n\r\nIf you cast the spell two or more times before completing your next long rest, there is a cumulative 25 percent chance for each casting after the first that you get a random reading. The DM makes this roll in secret.', 'Instantaneous', '1', '0', NULL, '30', NULL, '0', '1');
+$spellfour = $conn->prepare("INSERT INTO `spells` (`SpellID`, `Name`, `Spelllevel`, `School`, `CastingTime`, `Description`, `Duration`, `Verbal`, `Somatic`, `Material`, `RangeofSpell`, `Splash`, `Conc`, `Ritual`) VALUES (NULL, 'Augury', '2', 'Divination', '1 minute', 'By casting gem-inlaid sticks, rolling dragon bones, laying out ornate cards, or employing some other divining tool, you receive an omen from an otherworldly entity about the results of a specific course of action that you plan to take within the next 30 minutes. The DM chooses from the following possible omens:\r\n\r\n<br>Weal, for good results\r\n<br>Woe, for bad results\r\n<br>Weal and woe, for both good and bad results\r\n<br>Nothing, for results that aren\'t especially good or bad<br>\r\nThe spell doesn\'t take into account any possible circumstances that might change the outcome, such as the casting of additional spells or the loss or gain of a companion.\r\n\r\nIf you cast the spell two or more times before completing your next long rest, there is a cumulative 25 percent chance for each casting after the first that you get a random reading. The DM makes this roll in secret.', 'Instantaneous', '1', '0', NULL, '30', NULL, '0', '1');
 ");
 $spellfour->execute();
 $spellfour->closeCursor();
@@ -261,17 +261,24 @@ $spellfour->closeCursor();
 $tag->execute();
 $tag->closeCursor();*/
 
-$tags = $conn->prepare("INSERT INTO `tags` (`Tag`) VALUES ('Fire'), ('Healing'), ('AoE'), ('Damage');
+$tags = $conn->prepare("INSERT INTO `tags` (`Tag`) VALUES ('Fire'), ('Healing'), ('AoE'), ('Damage'), ('Utility');
 ");
 $tags->execute();
 $tags->closeCursor();
 
 #GIVING SPELLS TAGS
 
-$spelltags = $conn->prepare("INSERT INTO `spellhastags` (`SpellID`, `Tag`) VALUES ('1', 'Fire'), ('2', 'Fire'), ('1', 'AoE');
+$spelltags = $conn->prepare("INSERT INTO `spellhastags` (`SpellID`, `Tag`) VALUES ('1', 'Fire'), ('2', 'Fire'), ('1', 'AoE'), ('2', 'AoE'), ('1','Damage'), ('2','Damage'), ('3','Damage'), ('4','Utility');
 ");
 $spelltags->execute();
 $spelltags->closeCursor();
+
+#MAKING TEST CHARACTERS
+/*
+$makingchars = $conn->prepare("INSERT INTO 'characters' ('UserID', 'CharName') VALUES ('2','Joe'), ('2','Wilbur')
+");
+$makingchars->execute();
+$makingchars->closeCursor();*/
 
 echo("done");
 $conn=null;

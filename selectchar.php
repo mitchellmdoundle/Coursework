@@ -5,12 +5,6 @@ if (isset($_SESSION['Role'])){}
 else {header("Location:Login.php");}
 
 echo("UserID is ".$_SESSION['loggedinuser'].".<br>");
-$stmt = $conn->prepare("SELECT users.UserID as id, users.Username as username, users.Email as email
-FROM users
-WHERE UserID=:user
-");
-$stmt->bindParam(':user', $_SESSION['loggedinuser']);
-$stmt->execute();
 
 $stmt2 = $conn->prepare("SELECT characters.CharID as charid, characters.CharName as charname, UserID as user
 FROM characters
@@ -23,14 +17,16 @@ $stmt2->execute();
 <!DOCTYPE html>
 <html>
 <body>
-<select name="class" id="cars">
-<?php
-while ($row = $stmt2->fetch(PDO::FETCH_ASSOC))
-{
-  echo('<option value="'.$row['charid'].'">'.$row['charname'].'</option>');
-}
-?>
-</select>
+<form action="sheet.php" method="post"> 
+  <select name="char" id="char">
+  <?php
+  while ($row = $stmt2->fetch(PDO::FETCH_ASSOC))
+  {
+    echo('<option value="'.$row['charid'].'">'.$row['charname'].'</option>');
+  }
+  ?>
+  </select><br>
+  <input type="submit" value="Select Char">
 <br>
 <a href="http://localhost/Coursework/login.php">Log Out</a>
 </body>
