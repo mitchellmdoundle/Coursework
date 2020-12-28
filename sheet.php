@@ -2,6 +2,13 @@
 session_start();
 include_once("connection.php");
 echo($_POST['char']."<br>");
+
+#arrays
+$userA=array();
+$charA=array();
+$classA=array();
+
+
 $users = $conn->prepare("SELECT users.UserID as id, users.Username as username, users.Email as email
 FROM users
 WHERE UserID=:user
@@ -17,23 +24,39 @@ $char->bindParam(':chara', $_POST['char']);
 $char->execute();
 $_SESSION["charid"]=$_POST['char'];
 
+while ($row = $char->fetch(PDO::FETCH_ASSOC))
+  {
+    array_push($charA, array($row['CharName'],$row['Xp']));
+  }
+
+$class = $conn->prepare("SELECT *
+FROM class
+");
+$class->execute();
+
 ?>
 
 
 <form class="charsheet" action="savesheet.php" method="post">
   <header>
     <section class="charname">
-      <label for="charname">Character Name</label><input name="charname" placeholder="Derrig Stonehammer" />
+      <label for="charname">Character Name</label><input name="charname" value=
+      <?php
+        while ($row = $char->fetch(PDO::FETCH_ASSOC))
+          {
+            echo('"'.$row['CharName'].'"/>');
+          }
+      ?>
     </section>
     <section class="misc">
       <ul>
         <li>
-        <select name="char" id="char">
+        <select name="class" id="class">
             <?php
-            /*while ($row = $char->fetch(PDO::FETCH_ASSOC))
+            while ($row = $class->fetch(PDO::FETCH_ASSOC))
             {
-                echo('<option value="'.$row['charid'].'">'.$row['charname'].'</option>');
-            }*/
+                echo('<option value="'.$row['ClassID'].'">'.$row['ClassName'].'</option>');
+            }
             ?>
         </select>
         </li>
@@ -50,11 +73,14 @@ $_SESSION["charid"]=$_POST['char'];
           <label for="alignment">Alignment</label><input name="alignment" placeholder="Neutral Good" />
         </li>
         <li>
+          <?php echo("hi");?>
           <?php
+          echo("test");
           while ($row = $char->fetch(PDO::FETCH_ASSOC))
           {
             echo('<label for="experiencepoints">Experience Points</label><input name="experiencepoints" value="'.$row['Xp'].'" />');
             $xp=$row['Xp'];
+            echo("looping");
           }
           ?>
         </li>

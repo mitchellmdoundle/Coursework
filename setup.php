@@ -133,6 +133,7 @@ $six->closeCursor();
 $seven = $conn->prepare("DROP TABLE IF EXISTS class;
 CREATE TABLE class (
     ClassID INT(4) UNSIGNED AUTO_INCREMENT PRIMARY KEY,
+    ClassName VARCHAR(15),
     ProfNum INT(2),
     Hitdie INT(2),
     Savingthrow1 INT(1),
@@ -274,11 +275,11 @@ $spelltags->execute();
 $spelltags->closeCursor();
 
 #MAKING TEST CHARACTERS
-/*
-$makingchars = $conn->prepare("INSERT INTO 'characters' ('UserID', 'CharName') VALUES ('2','Joe'), ('2','Wilbur')
+$makingchars = $conn->prepare("INSERT INTO characters (UserID, CharName) 
+    VALUES ('2','Joe'), ('2','Wilbur')
 ");
 $makingchars->execute();
-$makingchars->closeCursor();*/
+$makingchars->closeCursor();
 
 echo("done");
 $conn=null;
