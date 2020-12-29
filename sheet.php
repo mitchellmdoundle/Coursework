@@ -26,36 +26,35 @@ $_SESSION["charid"]=$_POST['char'];
 
 while ($row = $char->fetch(PDO::FETCH_ASSOC))
   {
-    array_push($charA, array($row['CharName'],$row['Xp']));
+    array_push($charA, $row['CharName'], $row['Xp']);
   }
 
-$class = $conn->prepare("SELECT *
-FROM class
-");
-$class->execute();
-
+  print_r($charA);
 ?>
 
 
 <form class="charsheet" action="savesheet.php" method="post">
   <header>
     <section class="charname">
-      <label for="charname">Character Name</label><input name="charname" value=
+      <label for="charname">Character Name: </label><input name="charname" value=
       <?php
-        while ($row = $char->fetch(PDO::FETCH_ASSOC))
-          {
-            echo('"'.$row['CharName'].'"/>');
-          }
+        echo($charA[0]);
       ?>
     </section>
     <section class="misc">
       <ul>
         <li>
+        Class: 
         <select name="class" id="class">
             <?php
+            $class = $conn->prepare("SELECT *
+            FROM class
+            ");
+            $class->execute();
+            
             while ($row = $class->fetch(PDO::FETCH_ASSOC))
             {
-                echo('<option value="'.$row['ClassID'].'">'.$row['ClassName'].'</option>');
+              echo('<option value="'.$row['ClassID'].'">'.$row['ClassName'].'</option>');
             }
             ?>
         </select>
@@ -73,15 +72,10 @@ $class->execute();
           <label for="alignment">Alignment</label><input name="alignment" placeholder="Neutral Good" />
         </li>
         <li>
-          <?php echo("hi");?>
+        <label for="experiencepoints">Experience Points</label><input name="experiencepoints" value=
           <?php
-          echo("test");
-          while ($row = $char->fetch(PDO::FETCH_ASSOC))
-          {
-            echo('<label for="experiencepoints">Experience Points</label><input name="experiencepoints" value="'.$row['Xp'].'" />');
-            $xp=$row['Xp'];
-            echo("looping");
-          }
+          echo('"'.$charA[1].'" />');
+          $xp=$charA[1];
           ?>
         </li>
         <li>

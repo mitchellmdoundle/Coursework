@@ -274,6 +274,13 @@ $spelltags = $conn->prepare("INSERT INTO `spellhastags` (`SpellID`, `Tag`) VALUE
 $spelltags->execute();
 $spelltags->closeCursor();
 
+#CLASSES
+$classes = $conn->prepare("INSERT INTO class (ClassName) 
+    VALUES ('Sorcerer'), ('Bard')
+");
+$classes->execute();
+$classes->closeCursor();
+
 #MAKING TEST CHARACTERS
 $makingchars = $conn->prepare("INSERT INTO characters (UserID, CharName) 
     VALUES ('2','Joe'), ('2','Wilbur')
