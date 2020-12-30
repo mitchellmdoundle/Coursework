@@ -12,4 +12,17 @@ $char->bindParam(':chara', $_SESSION['charid']);
 $char->bindParam(':charname', $_POST['charname']);
 $char->bindParam(':xp', $_POST['experiencepoints']);
 $char->execute();
+
+$charclass = $conn->prepare("UPDATE `charhasclass` 
+SET `ClassID` = :class, `Level` = :levels
+WHERE `charhasclass`.`CharID` = :chara
+");
+$charclass->bindParam(':chara', $_SESSION['charid']);
+$charclass->bindParam(':class', $_POST['class']);
+$charclass->bindParam(':levels', $_SESSION['level']);
+$charclass->execute();
+
+print_r($_POST['class']);
 ?>
+<br>
+<a href="http://localhost/Coursework/sheet.php">Return</a>

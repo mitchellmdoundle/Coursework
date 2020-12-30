@@ -8,13 +8,17 @@ $userA=array();
 $charA=array();
 $classA=array();
 
-
 $users = $conn->prepare("SELECT users.UserID as id, users.Username as username, users.Email as email
 FROM users
 WHERE UserID=:user
 ");
 $users->bindParam(':user', $_SESSION['loggedinuser']);
 $users->execute();
+
+while ($row = $users->fetch(PDO::FETCH_ASSOC))
+  {
+    array_push($userA, $row['id'], $row['username'], $row['email']);
+  }
 
 $char = $conn->prepare("SELECT *
 FROM characters
@@ -29,7 +33,22 @@ while ($row = $char->fetch(PDO::FETCH_ASSOC))
     array_push($charA, $row['CharName'], $row['Xp']);
   }
 
-  print_r($charA);
+$class = $conn->prepare("SELECT *
+FROM charhasclass
+INNER JOIN class
+ON charhasclass.ClassID=class.ClassID
+WHERE CharID=:chara
+");
+$class->bindParam(':chara', $_POST['char']);
+$class->execute();
+
+while ($row = $class->fetch(PDO::FETCH_ASSOC))
+  {
+    array_push($classA, array($row['ClassID'],$row['ClassName']));
+  }
+
+print_r($classA);
+print_r($classA[0][0]);
 ?>
 
 
@@ -46,15 +65,16 @@ while ($row = $char->fetch(PDO::FETCH_ASSOC))
         <li>
         Class: 
         <select name="class" id="class">
-            <?php
-            $class = $conn->prepare("SELECT *
+          <?php
+            $classes = $conn->prepare("SELECT *
             FROM class
             ");
-            $class->execute();
-            
-            while ($row = $class->fetch(PDO::FETCH_ASSOC))
+            $classes->execute();
+            #print_r($classes);
+            while ($row = $classes->fetch(PDO::FETCH_ASSOC))
             {
-              echo('<option value="'.$row['ClassID'].'">'.$row['ClassName'].'</option>');
+              if($row['ClassID']=$classA[0][0]){echo('<option value="'.$row['ClassID'].'" selected>'.$row['ClassName'].'</option>');}
+              else{echo('<option value="'.$row['ClassID'].'">'.$row['ClassName'].'</option>');}
             }
             ?>
         </select>
