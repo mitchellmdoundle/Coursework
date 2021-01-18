@@ -1,7 +1,12 @@
 <?php 
 session_start();
 include_once("connection.php");
-echo($_POST['char']."<br>");
+print_r($_POST);
+if(isset($_POST['char']))
+  {$_SESSION['char']=intval($_POST['char']);}
+echo($_SESSION["char"]."<br>");
+echo("<br>");
+echo(gettype($_SESSION["char"]));
 
 #arrays
 $userA=array();
@@ -24,9 +29,9 @@ $char = $conn->prepare("SELECT *
 FROM characters
 WHERE CharID=:chara
 ");
-$char->bindParam(':chara', $_POST['char']);
+$char->bindParam(':chara', $_SESSION['char']);
 $char->execute();
-$_SESSION["charid"]=$_POST['char'];
+$_SESSION["charid"]=$_SESSION['char'];
 
 while ($row = $char->fetch(PDO::FETCH_ASSOC))
   {
@@ -39,16 +44,16 @@ INNER JOIN class
 ON charhasclass.ClassID=class.ClassID
 WHERE CharID=:chara
 ");
-$class->bindParam(':chara', $_POST['char']);
+$class->bindParam(':chara', $_SESSION['char']);
 $class->execute();
 
 while ($row = $class->fetch(PDO::FETCH_ASSOC))
   {
-    array_push($classA, array($row['ClassID'],$row['ClassName']));
+    array_push($classA, $row['ClassID'], $row['ClassName']);
   }
 
 print_r($classA);
-print_r($classA[0][0]);
+print_r($classA[0]);
 ?>
 
 
@@ -73,11 +78,16 @@ print_r($classA[0][0]);
             #print_r($classes);
             while ($row = $classes->fetch(PDO::FETCH_ASSOC))
             {
-              if($row['ClassID']=$classA[0][0]){echo('<option value="'.$row['ClassID'].'" selected>'.$row['ClassName'].'</option>');}
-              else{echo('<option value="'.$row['ClassID'].'">'.$row['ClassName'].'</option>');}
+              if($row['ClassID']==$classA[0]){
+                echo('<option value="'.$row['ClassID'].'" selected>'.$row['ClassName'].'</option>');
+              }
+              else{
+                echo('<option value="'.$row['ClassID'].'">'.$row['ClassName'].'</option>');
+              }
             }
             ?>
         </select>
+
         </li>
         <li>
           <label for="background">Background</label><input name="background" placeholder="Cloistered Scholar" />

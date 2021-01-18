@@ -22,7 +22,8 @@ $charclass->bindParam(':class', $_POST['class']);
 $charclass->bindParam(':levels', $_SESSION['level']);
 $charclass->execute();
 
-print_r($_POST['class']);
+echo($_POST['class']);
+echo("test");
 ?>
 <br>
 <a href="http://localhost/Coursework/sheet.php">Return</a>

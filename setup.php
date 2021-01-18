@@ -269,24 +269,31 @@ $tags->closeCursor();
 
 #GIVING SPELLS TAGS
 
-$spelltags = $conn->prepare("INSERT INTO `spellhastags` (`SpellID`, `Tag`) VALUES ('1', 'Fire'), ('2', 'Fire'), ('1', 'AoE'), ('2', 'AoE'), ('1','Damage'), ('2','Damage'), ('3','Damage'), ('4','Utility');
+$spelltags = $conn->prepare("INSERT INTO `spellhastags` (`SpellID`, `Tag`) VALUES (1, 'Fire'), (2, 'Fire'), (1, 'AoE'), (2, 'AoE'), (1,'Damage'), (2,'Damage'), (3,'Damage'), (4,'Utility');
 ");
 $spelltags->execute();
 $spelltags->closeCursor();
 
 #CLASSES
 $classes = $conn->prepare("INSERT INTO class (ClassName) 
-    VALUES ('Sorcerer'), ('Bard')
+    VALUES ('Sorcerer'), ('Bard'), ('Warlock')
 ");
 $classes->execute();
 $classes->closeCursor();
 
 #MAKING TEST CHARACTERS
 $makingchars = $conn->prepare("INSERT INTO characters (UserID, CharName) 
-    VALUES ('2','Joe'), ('2','Wilbur')
+    VALUES (2,'Joe'), (2,'Wilbur')
 ");
 $makingchars->execute();
 $makingchars->closeCursor();
+
+#ASSIGNING TEST CHARACTERS CLASSES
+$givingclass = $conn->prepare("INSERT INTO charhasclass (CharId, ClassID, Level) 
+    VALUES (1,1,2), (2,2,1)
+");
+$givingclass->execute();
+$givingclass->closeCursor();
 
 echo("done");
 $conn=null;
