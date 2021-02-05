@@ -63,7 +63,8 @@ print_r($classA[0]);
       <label for="charname">Character Name: </label><input name="charname" value=
       <?php
         echo($charA[0]);
-      ?>
+      ?>><br>
+      <a href="http://localhost/Coursework/spells.php">Spells</a> (Note: Only do this once everything is saved.)
     </section>
     <section class="misc">
       <ul>

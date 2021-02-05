@@ -12,6 +12,7 @@
     </tr>
 <?php
 include_once('connection.php');
+session_start();
 $stmt = $conn->prepare("SELECT spells.name as spellname, spells.school as school, spells.spelllevel as spelllevel,
  spellhastags.tag as tag, spells.SpellID as id
 FROM spellhastags
@@ -36,6 +37,25 @@ while ($row = $stmt->fetch(PDO::FETCH_ASSOC))
 }
 echo("</td></tr>");
 /*print_r($uniqueIDs);*/
+
+$charA=array();
+
+$char = $conn->prepare("SELECT *
+FROM charhasclass
+INNER JOIN characters
+ON charhasclass.CharID=characters.CharID
+WHERE CharID=:chara
+");
+$char->bindParam(':chara', $_SESSION['charid']);
+$char->execute();
+
+while ($row = $char->fetch(PDO::FETCH_ASSOC))
+  {
+    print_r($row);
+    array_push($charA, $row['CharName'], $row['Xp']);
+  }
+
+
 ?>
 </table>
 
