@@ -27,7 +27,7 @@ CREATE TABLE characters (
     CharID INT(6) UNSIGNED AUTO_INCREMENT PRIMARY KEY,
     UserID INT(4) UNSIGNED NOT NULL,
     CharName VARCHAR(20),
-    BackgroundID INT(2),
+    BackgroundID INT(2) DEFAULT(0),
     SubAncestryID INT(2),
     Xp Int(4) DEFAULT(0),
     Strength INT(2) DEFAULT(10),
@@ -157,7 +157,7 @@ $nine = $conn->prepare("DROP TABLE IF EXISTS charhasclass;
 CREATE TABLE charhasclass (
     CharID INT(6) UNSIGNED PRIMARY KEY,
     ClassID INT(4) UNSIGNED,
-    Level INT(4)
+    CharLevel INT(4)
 );
 ");
 $nine->execute();
@@ -193,7 +193,7 @@ $twelve->closeCursor();
 $thirteen = $conn->prepare("DROP TABLE IF EXISTS subclassfeatures;
 CREATE TABLE subclassfeatures (
     SubclassID INT(4) UNSIGNED PRIMARY KEY,
-    Level INT(2) UNSIGNED,
+    CharLevel INT(2) UNSIGNED,
     Feature VARCHAR(3000)
 );
 ");
@@ -203,7 +203,7 @@ $thirteen->closeCursor();
 $fourteen = $conn->prepare("DROP TABLE IF EXISTS subancestryfeatures;
 CREATE TABLE subancestryfeatures (
     SubAncestryID INT(2) UNSIGNED PRIMARY KEY,
-    Level INT(2) UNSIGNED,
+    CharLevel INT(2) UNSIGNED,
     Feature VARCHAR(3000)
 );
 ");
@@ -213,7 +213,7 @@ $fourteen->closeCursor();
 $fifteen = $conn->prepare("DROP TABLE IF EXISTS classfeatures;
 CREATE TABLE classfeatures (
     ClassID INT(4) UNSIGNED PRIMARY KEY,
-    Level INT(2) UNSIGNED,
+    CharLevel INT(2) UNSIGNED,
     Feature VARCHAR(3000)
 );
 ");
@@ -228,6 +228,19 @@ CREATE TABLE subclasshasspells (
 ");
 $sixteen->execute();
 $sixteen->closeCursor();
+
+$seventeen = $conn->prepare("DROP TABLE IF EXISTS backgrounds;
+CREATE TABLE backgrounds (
+    BackgroundID INT(2) UNSIGNED AUTO_INCREMENT PRIMARY KEY,
+    BackgroundName VARCHAR(30),
+    ProfOne INT(2),
+    ProfTwo INT(2),
+    LangTool VARCHAR(20),
+    Feature VARCHAR(3000)
+);
+");
+$seventeen->execute();
+$seventeen->closeCursor();
 
 
 #SPELLS
@@ -288,8 +301,16 @@ $makingchars = $conn->prepare("INSERT INTO characters (UserID, CharName)
 $makingchars->execute();
 $makingchars->closeCursor();
 
+#BACKGROUNDS
+$background = $conn->prepare("INSERT INTO backgrounds (BackgroundName) 
+    VALUES ('Sage'), ('Outlander'), ('Criminal')
+");
+$background->execute();
+$background->closeCursor();
+
+
 #ASSIGNING TEST CHARACTERS CLASSES
-$givingclass = $conn->prepare("INSERT INTO charhasclass (CharId, ClassID, Level) 
+$givingclass = $conn->prepare("INSERT INTO charhasclass (CharId, ClassID, CharLevel) 
     VALUES (1,1,2), (2,2,1)
 ");
 $givingclass->execute();
@@ -298,4 +319,15 @@ $givingclass->closeCursor();
 echo("done");
 $conn=null;
 
+
+
+
+
+
+
+
+
+
+
 ?>
+

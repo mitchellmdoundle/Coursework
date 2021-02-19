@@ -35,7 +35,7 @@ $_SESSION["charid"]=$_SESSION['char'];
 
 while ($row = $char->fetch(PDO::FETCH_ASSOC))
   {
-    array_push($charA, $row['CharName'], $row['Xp']);
+    array_push($charA, $row['CharName'], $row['Xp'], $row['BackgroundID']);
   }
 
 $class = $conn->prepare("SELECT *
@@ -91,7 +91,26 @@ print_r($classA[0]);
 
         </li>
         <li>
-          <label for="background">Background</label><input name="background" placeholder="Cloistered Scholar" />
+        Background:
+        <select name="background" id="background">
+          <?php
+            $backgrounds = $conn->prepare("SELECT *
+            FROM backgrounds
+            ");
+            $backsgrounds->execute();
+            #print_r($backgrounds);
+            while ($row = $backgrounds->fetch(PDO::FETCH_ASSOC))
+            {
+              if($row['BackgroundID']==$charA[2]){
+                echo('<option value="'.$row['BackgroundID'].'" selected>'.$row['BackgroundName'].'</option>');
+              }
+              else{
+                echo('<option value="'.$row['BackgroundID'].'">'.$row['BackgroundName'].'</option>');
+              }
+            }
+            ?>
+        </select>
+
         </li>
         <li>
           <label for="playername">Player Name</label><input name="playername" placeholder="Matthew">
