@@ -97,7 +97,7 @@ print_r($classA[0]);
             $backgrounds = $conn->prepare("SELECT *
             FROM backgrounds
             ");
-            $backsgrounds->execute();
+            $backgrounds->execute();
             #print_r($backgrounds);
             while ($row = $backgrounds->fetch(PDO::FETCH_ASSOC))
             {
@@ -212,29 +212,29 @@ print_r($classA[0]);
             <input name="proficiencybonus" placeholder="+2" />
           </div>
           <div class="saves list-section box">
+          <div class="label">
+              Saving Throws | Prof | Auto?
+            </div>
             <ul>
               <li>
-                <label for="Strength-save">Strength</label><input name="Strength-save" placeholder="+0" type="text" /><input name="Strength-save-prof" type="checkbox" />
+                <label for="Strength-save">Strength</label><input name="Strength-save" placeholder="+0" type="text" /><input name="Strength-save-prof" type="checkbox" /><input name="Str-save-auto" type="checkbox" />
               </li>
               <li>
-                <label for="Dexterity-save">Dexterity</label><input name="Dexterity-save" placeholder="+0" type="text" /><input name="Dexterity-save-prof" type="checkbox" />
+                <label for="Dexterity-save">Dexterity</label><input name="Dexterity-save" placeholder="+0" type="text" /><input name="Dexterity-save-prof" type="checkbox" /><input name="Dex-save-auto" type="checkbox" />
               </li>
               <li>
-                <label for="Constitution-save">Constitution</label><input name="Constitution-save" placeholder="+0" type="text" /><input name="Constitution-save-prof" type="checkbox" />
+                <label for="Constitution-save">Constitution</label><input name="Constitution-save" placeholder="+0" type="text" /><input name="Constitution-save-prof" type="checkbox" /><input name="Con-save-auto" type="checkbox" />
               </li>
               <li>
-                <label for="Wisdom-save">Wisdom</label><input name="Wisdom-save" placeholder="+0" type="text" /><input name="Wisdom-save-prof" type="checkbox" />
+                <label for="Wisdom-save">Wisdom</label><input name="Wisdom-save" placeholder="+0" type="text" /><input name="Wisdom-save-prof" type="checkbox" /><input name="Wis-save-auto" type="checkbox" />
               </li>
               <li>
-                <label for="Intelligence-save">Intelligence</label><input name="Intelligence-save" placeholder="+0" type="text" /><input name="Intelligence-save-prof" type="checkbox" />
+                <label for="Intelligence-save">Intelligence</label><input name="Intelligence-save" placeholder="+0" type="text" /><input name="Intelligence-save-prof" type="checkbox" /><input name="Int-save-auto" type="checkbox" />
               </li>
               <li>
-                <label for="Charisma-save">Charisma</label><input name="Charisma-save" placeholder="+0" type="text" /><input name="Charisma-save-prof" type="checkbox" />
+                <label for="Charisma-save">Charisma</label><input name="Charisma-save" placeholder="+0" type="text" /><input name="Charisma-save-prof" type="checkbox" /><input name="Cha-save-auto" type="checkbox" />
               </li>
             </ul>
-            <div class="label">
-              Saving Throws
-            </div>
           </div>
           <div class="skills list-section box">
             <ul>

@@ -13,12 +13,31 @@
 <?php
 include_once('connection.php');
 session_start();
+
+$spellclassA=array();
+
+$spellclass = $conn->prepare("SELECT class.ClassID as classid, spells.SpellID as spells
+FROM classhasspells
+INNER JOIN class
+ON class.ClassID=classhasspells.ClassID
+FROM classhasspells
+INNER JOIN spells
+ON spells.SpellID=classhasspells.SpellID
+ORDER BY id
+");
+$spellclass->execute();
+while ($row = $spellclass->fetch(PDO::FETCH_ASSOC))
+  {
+    array_push($spellclassA, $row['ClassID'], $row['SpellID']);
+  }
+
 $stmt = $conn->prepare("SELECT spells.name as spellname, spells.school as school, spells.spelllevel as spelllevel,
  spellhastags.tag as tag, spells.SpellID as id
 FROM spellhastags
 INNER JOIN spells
 ON spells.SpellID=spellhastags.SpellID
 ORDER BY id
+WHERE 
 ");
 $stmt->execute();
 
@@ -43,15 +62,15 @@ $charA=array();
 $char = $conn->prepare("SELECT *
 FROM charhasclass
 INNER JOIN characters
-ON charhasclass.CharID=characters.CharID
-WHERE CharID=:chara
+ON characters.CharID=charhasclass.CharID
+WHERE charhasclass.CharID=:chara
 ");
 $char->bindParam(':chara', $_SESSION['charid']);
 $char->execute();
 
 while ($row = $char->fetch(PDO::FETCH_ASSOC))
   {
-    print_r($row);
+    #print_r($row);
     array_push($charA, $row['CharName'], $row['Xp']);
   }
 

@@ -183,8 +183,9 @@ $eleven->closeCursor();
 
 $twelve = $conn->prepare("DROP TABLE IF EXISTS classhasspells;
 CREATE TABLE classhasspells (
-    ClassID INT(4) UNSIGNED PRIMARY KEY,
-    SpellID INT(4) UNSIGNED
+    ClassID INT(4) UNSIGNED,
+    SpellID INT(4) UNSIGNED,
+    PRIMARY KEY (ClassID,SpellID)
 );
 ");
 $twelve->execute();
@@ -315,6 +316,13 @@ $givingclass = $conn->prepare("INSERT INTO charhasclass (CharId, ClassID, CharLe
 ");
 $givingclass->execute();
 $givingclass->closeCursor();
+
+#ASSIGNING SPELLS TO CLASSES
+$classspells = $conn->prepare("INSERT INTO classhasspells (ClassId, SpellID) 
+    VALUES (1,1), (1,2), (1,3), (2,4)
+");
+$classspells->execute();
+$classspells->closeCursor();
 
 echo("done");
 $conn=null;

@@ -5,16 +5,17 @@ echo($_POST['experiencepoints'].'<br>');
 echo($_SESSION['charid'].'<br>');
 
 $char = $conn->prepare("UPDATE `characters` 
-SET `Xp` = :xp, Charname = :charname
+SET `Xp` = :xp, Charname = :charname, BackgroundID = :backgroundID
 WHERE `characters`.`CharID` = :chara
 ;");
 $char->bindParam(':chara', $_SESSION['charid']);
 $char->bindParam(':charname', $_POST['charname']);
 $char->bindParam(':xp', $_POST['experiencepoints']);
+$char->bindParam(':backgroundID', $_POST['background']);
 $char->execute();
 
 $charclass = $conn->prepare("UPDATE `charhasclass` 
-SET `ClassID` = :class, `Level` = :levels
+SET `ClassID` = :class, `CharLevel` = :levels
 WHERE `charhasclass`.`CharID` = :chara
 ");
 $charclass->bindParam(':chara', $_SESSION['charid']);
