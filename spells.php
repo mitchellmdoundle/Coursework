@@ -24,7 +24,9 @@ FROM classhasspells
 INNER JOIN spells
 ON spells.SpellID=classhasspells.SpellID
 ORDER BY id
+WHERE 
 ");
+$spellclass->bindParam(':spellclass', $_SESSION['Class']);
 $spellclass->execute();
 while ($row = $spellclass->fetch(PDO::FETCH_ASSOC))
   {
