@@ -16,18 +16,18 @@ session_start();
 
 $spellclassA=array();
 
-$spellclass = $conn->prepare("SELECT class.ClassID as classid, spells.SpellID as spells
+$spellclass = $conn->prepare("SELECT  classhasspells.ClassID, classhasspells.SpellID, class.ClassID as cid, spells.SpellID as spID
 FROM classhasspells
 INNER JOIN class
-ON class.ClassID=classhasspells.ClassID
-FROM classhasspells
+ON cid=classhasspells.ClassID
 INNER JOIN spells
-ON spells.SpellID=classhasspells.SpellID
-ORDER BY id
-WHERE 
+ON spID=classhasspells.SpellID
+#WHERE classhasspells.ClassID=:spellclass
+#ORDER BY classhasspells.SpellID
 ");
 $spellclass->bindParam(':spellclass', $_SESSION['Class']);
 $spellclass->execute();
+
 while ($row = $spellclass->fetch(PDO::FETCH_ASSOC))
   {
     array_push($spellclassA, $row['ClassID'], $row['SpellID']);
@@ -39,7 +39,6 @@ FROM spellhastags
 INNER JOIN spells
 ON spells.SpellID=spellhastags.SpellID
 ORDER BY id
-WHERE 
 ");
 $stmt->execute();
 
