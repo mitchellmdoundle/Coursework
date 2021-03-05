@@ -9,14 +9,16 @@ session_start();
 </head>
 <body>
 <a href="http://localhost/coursework/sheet.php">Back</a><br>
+<form class="charsheet" action="savespells.php" method="post">
 <?php
 print_r($_SESSION['ClassID']);
 ?>
-&lttable&gt
-    &lttr&gt
-        &ltth&gtSpell Name&lt/th&gt
-        &ltth&gtSpell Level&lt/th&gt
-        &ltth&gtTags&lt/th&gt
+<table>
+    <tr>
+        <th>Prepared?</th>
+        <th>Spell Name</th>
+        <th>Spell Level</th>
+        <th>Tags</th>
 <?php
 switch ($_SESSION['ClassID']) {
   case 1 or 2:
@@ -50,51 +52,27 @@ $uniquespIDs=array();
 $tags=array();
 while ($row = $spellclass->fetch(PDO::FETCH_ASSOC))
   {
-    #print_r($row);
     if (in_array($row['spID'], $uniquespIDs))
     {
-      #echo("Repeat");
       if (in_array($row['tag'], $tags)){}
       else
       {
         array_push($tags,$row['tag']);
-        echo("&lttd&gt".$row['tag']."&lt/td&gt");
+        echo("<td>".$row['tag']."</td>");
       }
     }
     else 
     {
-      #print_r($tags);
       $tags=array();
-      echo("&lt/tr&gt&lttr&gt&lttd&gt".$row['spn']."&lt/td&gt&lttd&gt".$row['splev']."&lt/td&gt");
       array_push($tags,$row['tag']);
-      echo("&lttd&gt".$row['tag']."&lt/td&gt");
-      #print_r($row);
       array_push($uniquespIDs,$row['spID']);
-      #echo("&lttr&gt&lttd&gt".$row['spn']."&lt/td&gt&lttd&gt".$row['splev']."&lt/td&gt&lttd&gt".$row['tag'])."&lt/td&gt&lttd&gt";
+      echo("</tr><tr><td><input name='".$row['spID']."' type='checkbox' /></td><td>".$row['spn']."</td><td>".$row['splev']."</td><td>".$row['tag']."</td>");
     }
   }
-echo("&lt/table&gt");
-
-$charA=array();
-
-$char = $conn->prepare("SELECT *
-FROM charhasclass
-INNER JOIN characters
-ON characters.CharID=charhasclass.CharID
-WHERE charhasclass.CharID=:chara
-");
-$char->bindParam(':chara', $_SESSION['charid']);
-$char->execute();
-
-while ($row = $char->fetch(PDO::FETCH_ASSOC))
-  {
-    #print_r($row);
-    array_push($charA, $row['CharName'], $row['Xp']);
-  }
-
+echo("</tr></table>");
 
 ?>
-
+<input type="submit" value="Save">
 <br><br><br>
 <a href="http://localhost/coursework/login.php">Log Out</a><br>
 </body>
