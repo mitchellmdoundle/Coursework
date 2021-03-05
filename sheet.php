@@ -81,6 +81,7 @@ print_r($classA[0]);
             {
               if($row['ClassID']==$classA[0]){
                 echo('<option value="'.$row['ClassID'].'" selected>'.$row['ClassName'].'</option>');
+                $_SESSION['ClassID']=$row['ClassID'];
               }
               else{
                 echo('<option value="'.$row['ClassID'].'">'.$row['ClassName'].'</option>');
@@ -88,7 +89,9 @@ print_r($classA[0]);
             }
             ?>
         </select>
-
+        <?php
+        print_r($_SESSION['ClassID']);
+        ?>
         </li>
         <li>
         Background:
@@ -132,7 +135,9 @@ print_r($classA[0]);
             <?php
                 if ($xp<300){$level=1;}
                 elseif ($xp>=300 and $xp<900){$level=2;}
-                elseif ($xp>=900 and $xp<100000){$level=3;}
+                elseif ($xp>=900 and $xp<2700){$level=3;}
+                elseif ($xp>=2700 and $xp<6500){$level=4;}
+                elseif ($xp>=6500 and $xp<100000){$level=5;}
                 echo('Level: '.$level);
                 $_SESSION["level"]=$level;
             ?>
