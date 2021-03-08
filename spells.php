@@ -4,6 +4,9 @@
 <?php
 include_once('connection.php');
 session_start();
+if(isset($_SESSION['prepspells'])){}
+else{$_SESSION['prepspells']=0;}
+print_r($_SESSION['prepspells']);
 ?>
 <title>Spells</title>
 </head>
@@ -12,6 +15,18 @@ session_start();
 <form class="charsheet" action="savespells.php" method="post">
 <?php
 print_r($_SESSION['ClassID']);
+$preppedspellsA=array();
+
+$preppedspells=$conn->prepare("SELECT SpellID
+FROM charhasspell
+WHERE CharID=:charid
+");
+$preppedspells->bindParam(':charid',$_SESSION['char']);
+$preppedspells->execute();
+while ($row = $preppedspells->fetch(PDO::FETCH_ASSOC)){
+  array_push($preppedspellsA,$row['SpellID']);
+}
+
 ?>
 <table>
     <tr>
@@ -28,8 +43,6 @@ switch ($_SESSION['ClassID']) {
     $maxspell=ceil($_SESSION['level']/2);
     if ($maxspell>5){$maxspell=5;}
 }
-  
-$spellclassA=array();
 
 $spellclass = $conn->prepare("SELECT classhasspells.ClassID, classhasspells.SpellID, class.ClassID as cid, spells.Name as spn, spells.SpellID as spID, spells.Spelllevel as splev, charhasclass.CharLevel as lev, spells.school as spellschool, spellhastags.tag as tag
 FROM classhasspells
@@ -66,12 +79,20 @@ while ($row = $spellclass->fetch(PDO::FETCH_ASSOC))
       $tags=array();
       array_push($tags,$row['tag']);
       array_push($uniquespIDs,$row['spID']);
-      echo("</tr><tr><td><input name='".$row['spID']."' type='checkbox' /></td><td>".$row['spn']."</td><td>".$row['splev']."</td><td>".$row['tag']."</td>");
+      if (in_array($row['spID'], $preppedspellsA)){
+        echo("</tr><tr><td><input name='".$row['spID']."' type='checkbox' checked/></td><td>".$row['spn']."</td><td>".$row['splev']."</td><td>".$row['tag']."</td>");
+      }
+      elseif($_SESSION['prepspells']==0){
+        echo("</tr><tr><td><input name='".$row['spID']."' type='checkbox' /></td><td>".$row['spn']."</td><td>".$row['splev']."</td><td>".$row['tag']."</td>");
+      }
     }
   }
 echo("</tr></table>");
-
+echo("Show prepped spells only? <input name='prepspells' type='checkbox' ");
+if($_SESSION['prepspells']==1){echo("checked");}
+echo(" /><br>");
 ?>
+
 <input type="submit" value="Save">
 <br><br><br>
 <a href="http://localhost/coursework/login.php">Log Out</a><br>
