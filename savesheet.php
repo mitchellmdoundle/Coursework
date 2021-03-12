@@ -1,6 +1,7 @@
 <?php
 session_start();
 include_once("connection.php");
+header('Location: sheet.php');
 echo($_POST['experiencepoints'].'<br>');
 echo($_SESSION['charid'].'<br>');
 

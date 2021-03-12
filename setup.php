@@ -265,10 +265,22 @@ $spellthree = $conn->prepare("INSERT INTO `spells` (`SpellID`, `Name`, `Spelllev
 $spellthree->execute();
 $spellthree->closeCursor();
 
-$spellfour = $conn->prepare("INSERT INTO `spells` (`SpellID`, `Name`, `Spelllevel`, `School`, `CastingTime`, `Description`, `Duration`, `Verbal`, `Somatic`, `Material`, `RangeofSpell`, `Splash`, `Conc`, `Ritual`) VALUES (NULL, 'Augury', '2', 'Divination', '1 minute', 'By casting gem-inlaid sticks, rolling dragon bones, laying out ornate cards, or employing some other divining tool, you receive an omen from an otherworldly entity about the results of a specific course of action that you plan to take within the next 30 minutes. The DM chooses from the following possible omens:\r\n\r\n<br>Weal, for good results\r\n<br>Woe, for bad results\r\n<br>Weal and woe, for both good and bad results\r\n<br>Nothing, for results that aren\'t especially good or bad<br>\r\nThe spell doesn\'t take into account any possible circumstances that might change the outcome, such as the casting of additional spells or the loss or gain of a companion.\r\n\r\nIf you cast the spell two or more times before completing your next long rest, there is a cumulative 25 percent chance for each casting after the first that you get a random reading. The DM makes this roll in secret.', 'Instantaneous', '1', '0', NULL, '30', NULL, '0', '1');
+$spellfour = $conn->prepare("INSERT INTO `spells` (`SpellID`, `Name`, `Spelllevel`, `School`, `CastingTime`, `Description`, `Duration`, `Verbal`, `Somatic`, `Material`, `RangeofSpell`, `Splash`, `Conc`, `Ritual`) VALUES (NULL, 'Augury', '2', 'Divination', '1 minute', 'By casting gem-inlaid sticks, rolling dragon bones, laying out ornate cards, or employing some other divining tool, you receive an omen from an otherworldly entity about the results of a specific course of action that you plan to take within the next 30 minutes. The DM chooses from the following possible omens:\r\n\r\n<br>Weal, for good results\r\n<br>Woe, for bad results\r\n<br>Weal and woe, for both good and bad results\r\n<br>Nothing, for results that aren\'t especially good or bad<br>\r\nThe spell doesn\'t take into account any possible circumstances that might change the outcome, such as the casting of additional spells or the loss or gain of a companion.\r\n\r\nIf you cast the spell two or more times before completing your next long rest, there is a cumulative 25 percent chance for each casting after the first that you get a random reading. The DM makes this roll in secret.', 'Instantaneous', '1', '0', NULL, 'Self', NULL, '0', '1');
 ");
 $spellfour->execute();
 $spellfour->closeCursor();
+
+$spellfive = $conn->prepare("INSERT INTO `spells` (`SpellID`, `Name`, `Spelllevel`, `School`, `CastingTime`, `Description`, `Duration`, `Verbal`, `Somatic`, `Material`, `RangeofSpell`, `Splash`, `Conc`, `Ritual`) VALUES (NULL, 'Charm Person', '1', 'Enchantment', '1 action', 'text', '1 hour', '1', '1', NULL, '30', NULL, '1', '0');
+");
+$spellfive->execute();
+$spellfive->closeCursor();
+
+
+#this is a template for spells
+/*$spellfive = $conn->prepare("INSERT INTO `spells` (`SpellID`, `Name`, `Spelllevel`, `School`, `CastingTime`, `Description`, `Duration`, `Verbal`, `Somatic`, `Material`, `RangeofSpell`, `Splash`, `Conc`, `Ritual`) VALUES (NULL, 'Charm Person', '1', 'Enchantment', '1 hour', 'text', 'Instantaneous', '1', '0', NULL, '30', NULL, '0', '1');
+");
+$spellfive->execute();
+$spellfive->closeCursor();*/
 
 #TAGS
 /*$tag = $conn->prepare("
@@ -276,14 +288,14 @@ $spellfour->closeCursor();
 $tag->execute();
 $tag->closeCursor();*/
 
-$tags = $conn->prepare("INSERT INTO `tags` (`Tag`) VALUES ('Fire'), ('Healing'), ('AoE'), ('Damage'), ('Utility');
+$tags = $conn->prepare("INSERT INTO `tags` (`Tag`) VALUES ('Fire'), ('Healing'), ('AoE'), ('Damage'), ('Utility'), ('Social'), ('Acid');
 ");
 $tags->execute();
 $tags->closeCursor();
 
 #GIVING SPELLS TAGS
 
-$spelltags = $conn->prepare("INSERT INTO `spellhastags` (`SpellID`, `Tag`) VALUES (1, 'Fire'), (2, 'Fire'), (1, 'AoE'), (2, 'AoE'), (1,'Damage'), (2,'Damage'), (3,'Damage'), (4,'Utility');
+$spelltags = $conn->prepare("INSERT INTO `spellhastags` (`SpellID`, `Tag`) VALUES (1, 'Fire'), (2, 'Fire'), (1, 'AoE'), (2, 'AoE'), (1,'Damage'), (2,'Damage'), (3,'Acid'), (3,'Damage'), (4,'Utility'), (5, 'Utility'), (5, 'Social');
 ");
 $spelltags->execute();
 $spelltags->closeCursor();
@@ -319,7 +331,7 @@ $givingclass->closeCursor();
 
 #ASSIGNING SPELLS TO CLASSES
 $classspells = $conn->prepare("INSERT INTO classhasspells (ClassId, SpellID) 
-    VALUES (1,1), (1,2), (1,3), (2,4)
+    VALUES (1,1), (1,2), (1,3), (1,5), (2,5), (3,5)
 ");
 $classspells->execute();
 $classspells->closeCursor();

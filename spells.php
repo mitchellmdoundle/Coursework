@@ -35,6 +35,7 @@ while ($row = $preppedspells->fetch(PDO::FETCH_ASSOC)){
         <th>Spell Level</th>
         <th>Tags</th>
 <?php
+#this lets the system know what the highest level spell that they should show is based on their class and current level
 switch ($_SESSION['ClassID']) {
   case 1 or 2:
     $maxspell=ceil($_SESSION['level']/2);
@@ -44,6 +45,7 @@ switch ($_SESSION['ClassID']) {
     if ($maxspell>5){$maxspell=5;}
 }
 
+#this sql pulls all of the tables into one single massive table, from which I can draw all the information I need, including making sure it's class-specific and level-based
 $spellclass = $conn->prepare("SELECT classhasspells.ClassID, classhasspells.SpellID, class.ClassID as cid, spells.Name as spn, spells.SpellID as spID, spells.Spelllevel as splev, charhasclass.CharLevel as lev, spells.school as spellschool, spellhastags.tag as tag
 FROM classhasspells
 INNER JOIN class
@@ -61,6 +63,8 @@ $spellclass->bindParam(':spellclass', $_SESSION['ClassID']);
 $spellclass->bindParam(':maxspell', $maxspell);
 $spellclass->execute();
 
+#this filters through the entire table to prevent duplicate spells being shown, and then shows all the spells that meet the requirements
+#also, i made sure to include an if at the lower levels that checks if the spells have been made to only show the prepared spells or not
 $uniquespIDs=array();
 $tags=array();
 while ($row = $spellclass->fetch(PDO::FETCH_ASSOC))
@@ -88,6 +92,7 @@ while ($row = $spellclass->fetch(PDO::FETCH_ASSOC))
     }
   }
 echo("</tr></table>");
+#this is a checkbox that is used by savespells.php 
 echo("Show prepped spells only? <input name='prepspells' type='checkbox' ");
 if($_SESSION['prepspells']==1){echo("checked");}
 echo(" /><br>");
