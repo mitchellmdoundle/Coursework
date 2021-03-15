@@ -4,9 +4,9 @@ include_once("connection.php");
 print_r($_POST);
 if(isset($_POST['char']))
   {$_SESSION['char']=intval($_POST['char']);}
-echo($_SESSION["char"]."<br>");
+/*echo($_SESSION["char"]."<br>");
 echo("<br>");
-echo(gettype($_SESSION["char"]));
+echo(gettype($_SESSION["char"]));*/
 
 #arrays
 $userA=array();
@@ -51,9 +51,6 @@ while ($row = $class->fetch(PDO::FETCH_ASSOC))
   {
     array_push($classA, $row['ClassID'], $row['ClassName']);
   }
-
-print_r($classA);
-print_r($classA[0]);
 ?>
 
 
@@ -65,6 +62,8 @@ print_r($classA[0]);
         echo($charA[0]);
       ?>><br>
       <a href="http://localhost/Coursework/spells.php">Spells</a> (Note: Only do this once everything is saved.)
+      <br>
+      <a href="http://localhost/Coursework/selectchar.php">Return</a>
     </section>
     <section class="misc">
       <ul>
@@ -89,9 +88,6 @@ print_r($classA[0]);
             }
             ?>
         </select>
-        <?php
-        print_r($_SESSION['ClassID']);
-        ?>
         </li>
         <li>
         Background:

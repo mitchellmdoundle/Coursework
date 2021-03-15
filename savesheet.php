@@ -2,8 +2,8 @@
 session_start();
 include_once("connection.php");
 header('Location: sheet.php');
-echo($_POST['experiencepoints'].'<br>');
-echo($_SESSION['charid'].'<br>');
+echo('xp '.$_POST['experiencepoints'].'<br>');
+echo('charid '.$_SESSION['charid'].'<br>');
 
 $char = $conn->prepare("UPDATE `characters` 
 SET `Xp` = :xp, Charname = :charname, BackgroundID = :backgroundID

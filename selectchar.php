@@ -27,6 +27,13 @@ $stmt2->execute();
   ?>
   </select><br>
   <input type="submit" value="Select Char">
+</form>
+<form action="makechar.php" method="post">
+  <input name="CharName" placeholder="Aelwyn the Wise">
+  <input type="submit" value="Make New Character">
+</form>
+<br>
+<a href="http://localhost/Coursework/deletechar.php">Delete a Character</a>
 <br>
 <a href="http://localhost/Coursework/login.php">Log Out</a>
 </body>

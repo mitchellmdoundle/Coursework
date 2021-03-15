@@ -321,7 +321,6 @@ $background = $conn->prepare("INSERT INTO backgrounds (BackgroundName)
 $background->execute();
 $background->closeCursor();
 
-
 #ASSIGNING TEST CHARACTERS CLASSES
 $givingclass = $conn->prepare("INSERT INTO charhasclass (CharId, ClassID, CharLevel) 
     VALUES (1,1,2), (2,2,1)
