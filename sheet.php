@@ -35,7 +35,7 @@ $_SESSION["charid"]=$_SESSION['char'];
 
 while ($row = $char->fetch(PDO::FETCH_ASSOC))
   {
-    array_push($charA, $row['CharName'], $row['Xp'], $row['BackgroundID']);
+    array_push($charA, $row['CharName'], $row['Xp'], $row['BackgroundID'], $row['PlayerName'], $row['Strength'], $row['Dexterity']);
   }
 
 $class = $conn->prepare("SELECT *
@@ -112,7 +112,15 @@ while ($row = $class->fetch(PDO::FETCH_ASSOC))
 
         </li>
         <li>
-          <label for="playername">Player Name</label><input name="playername" placeholder="Matthew">
+          <label for="playername">Player Name: </label><input name="playername"
+          <?php 
+          if (is_null($charA[3])){echo('placeholder="Matthew"');}
+          else{
+          echo('value="'.$charA[3].'"');
+          }
+          ?>
+          >
+
         </li>
         <li>
           <label for="ancestry">Ancestry</label><input name="ancestry" placeholder="Mountain Dwarf" />
@@ -138,10 +146,9 @@ while ($row = $class->fetch(PDO::FETCH_ASSOC))
                 $_SESSION["level"]=$level;
             ?>
         </li>
-        <li>
-            <input type="submit" value="Save">
-        </li>
-      </ul>
+        </ul>
+        <input type="submit" value="Save">
+
     </section>
   </header>
   <main>
@@ -151,19 +158,25 @@ while ($row = $class->fetch(PDO::FETCH_ASSOC))
           <ul>
             <li>
               <div class="score">
-                <label for="Strengthscore">Strength</label><input name="Strengthscore" placeholder="10" />
-              </div>
-              <div class="modifier">
-                <input name="Strengthmod" placeholder="+0" />
-              </div>
+                <label for="strengthscore">Strength</label><input name="strengthscore" 
+                <?php 
+                  echo('value="'.$charA[4].'"/> ');
+                  $strmod=(intval($charA[4])-10)/2;
+                  if ($strmod > -0.1){echo("+".round($strmod,0,PHP_ROUND_HALF_DOWN));}
+                  else{echo(round($strmod,0,PHP_ROUND_HALF_UP));}
+                ?>
+              <div>
             </li>
             <li>
-              <div class="score">
-                <label for="Dexterityscore">Dexterity</label><input name="Dexterityscore" placeholder="10" />
-              </div>
-              <div class="modifier">
-                <input name="Dexteritymod" placeholder="+0" />
-              </div>
+            <div class="score">
+                <label for="dexterityscore">Dexterity</label><input name="dexterityscore" 
+                <?php 
+                  echo('value="'.$charA[5].'"/> ');
+                  $dexmod=(intval($charA[5])-10)/2;
+                  if ($dexmod > -0.1){echo("+".round($dexmod,0,PHP_ROUND_HALF_DOWN));}
+                  else{echo(round($dexmod,0,PHP_ROUND_HALF_UP));}
+                ?>
+              <div>
             </li>
             <li>
               <div class="score">

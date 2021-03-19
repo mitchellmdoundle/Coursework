@@ -27,6 +27,7 @@ CREATE TABLE characters (
     CharID INT(6) UNSIGNED AUTO_INCREMENT PRIMARY KEY,
     UserID INT(4) UNSIGNED NOT NULL,
     CharName VARCHAR(20),
+    PlayerName VARCHAR(20),
     BackgroundID INT(2) DEFAULT(0),
     SubAncestryID INT(2),
     Xp Int(4) DEFAULT(0),
