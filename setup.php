@@ -17,7 +17,8 @@ $pop = $conn->prepare('
 INSERT INTO users(UserID,Username,Email,Password,Role)
 VALUES 
     (null, "MatthewMitchell", "MattEmail@email.com", "banana1", 1),
-    (null, "NoahCooper", "NoahEmail@email.com", "apple1", 0)
+    (null, "NoahCooper", "NoahEmail@email.com", "apple1", 0),
+    (null, "JamesEgerton", "JamesEmail@email.com", "balogne", 0)
     ');
 $pop->execute();
 $pop->closeCursor();
@@ -123,9 +124,10 @@ $five->closeCursor();
 
 $six = $conn->prepare("DROP TABLE IF EXISTS charhasspell;
 CREATE TABLE charhasspell (
-    CharID INT(6) UNSIGNED PRIMARY KEY,
+    CharID INT(6) UNSIGNED,
     SpellID INT(4) UNSIGNED,
-    Often TINYINT(1)
+    Often TINYINT(1),
+    PRIMARY KEY (CharID, SpellID)
 );
 ");
 $six->execute();
@@ -276,6 +278,12 @@ $spellfive = $conn->prepare("INSERT INTO `spells` (`SpellID`, `Name`, `Spellleve
 $spellfive->execute();
 $spellfive->closeCursor();
 
+$spellmore = $conn->prepare("INSERT INTO `spells` (`SpellID`, `Name`, `Spelllevel`, `School`, `CastingTime`, `Description`, `Duration`, `Verbal`, `Somatic`, `Material`, `RangeofSpell`, `Splash`, `Conc`, `Ritual`) 
+VALUES (NULL, 'Hypnotic Pattern', '3', 'Illusion', '1 action', 'text', '1 minute', '0', '1', 'A glowing stick of incense or a crystal vial filled with phosphorescent material', '120', '30-foot cube', '1', '0');
+");
+$spellmore->execute();
+$spellmore->closeCursor();
+
 
 #this is a template for spells
 /*$spellfive = $conn->prepare("INSERT INTO `spells` (`SpellID`, `Name`, `Spelllevel`, `School`, `CastingTime`, `Description`, `Duration`, `Verbal`, `Somatic`, `Material`, `RangeofSpell`, `Splash`, `Conc`, `Ritual`) VALUES (NULL, 'Charm Person', '1', 'Enchantment', '1 hour', 'text', 'Instantaneous', '1', '0', NULL, '30', NULL, '0', '1');
@@ -296,14 +304,16 @@ $tags->closeCursor();
 
 #GIVING SPELLS TAGS
 
-$spelltags = $conn->prepare("INSERT INTO `spellhastags` (`SpellID`, `Tag`) VALUES (1, 'Fire'), (2, 'Fire'), (1, 'AoE'), (2, 'AoE'), (1,'Damage'), (2,'Damage'), (3,'Acid'), (3,'Damage'), (4,'Utility'), (5, 'Utility'), (5, 'Social');
+$spelltags = $conn->prepare("INSERT INTO `spellhastags` (`SpellID`, `Tag`) 
+VALUES (1, 'Fire'), (2, 'Fire'), (1, 'AoE'), (2, 'AoE'), (1,'Damage'), (2,'Damage'), (3,'Acid'), 
+(3,'Damage'), (4,'Utility'), (5, 'Utility'), (5, 'Social'), (6, 'AoE'), (6, 'Utility');
 ");
 $spelltags->execute();
 $spelltags->closeCursor();
 
 #CLASSES
 $classes = $conn->prepare("INSERT INTO class (ClassName) 
-    VALUES ('Sorcerer'), ('Bard'), ('Warlock')
+    VALUES ('Sorcerer'), ('Bard'), ('Warlock'), ('Wizard'), ('Cleric'), ('Fighter'), ('Druid')
 ");
 $classes->execute();
 $classes->closeCursor();
@@ -317,7 +327,7 @@ $makingchars->closeCursor();
 
 #BACKGROUNDS
 $background = $conn->prepare("INSERT INTO backgrounds (BackgroundName) 
-    VALUES ('Sage'), ('Outlander'), ('Criminal')
+    VALUES ('Sage'), ('Outlander'), ('Criminal'), ('Hermit'), ('Folk Hero')
 ");
 $background->execute();
 $background->closeCursor();
@@ -331,7 +341,7 @@ $givingclass->closeCursor();
 
 #ASSIGNING SPELLS TO CLASSES
 $classspells = $conn->prepare("INSERT INTO classhasspells (ClassId, SpellID) 
-    VALUES (1,1), (1,2), (1,3), (1,5), (2,5), (3,5)
+    VALUES (1,1), (1,2), (1,3), (1,5), (1,6), (2,5), (2,6), (3,5), (3,6), (4,1), (4,2), (4,3), (4,4), (4,5), (4,6), (5,4), (7,4)
 ");
 $classspells->execute();
 $classspells->closeCursor();

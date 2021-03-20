@@ -26,6 +26,7 @@ while ($row = $stmt->fetch(PDO::FETCH_ASSOC))
 echo($row["UserID"].': '.$row["Username"].', '.$row["Email"].', '.$row["Role"].', '.$row["Password"]."<br>");
 }
 ?>
+<a href="http://localhost/Coursework/selectchar.php">Characters</a><br>
 <a href="http://localhost/Coursework/login.php">Log Out</a>
 </body>
 </html>

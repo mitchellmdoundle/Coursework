@@ -30,6 +30,7 @@ foreach($prepped as $spellid){
         $spellinsert->closeCursor();
     }
 }
+print_r($prepped)
 ?>
 <br>
 <a href="http://localhost/Coursework/spells.php">return</a>

@@ -2,8 +2,11 @@
 session_start();
 include_once("connection.php");
 print_r($_POST);
-if(isset($_POST['char']))
-  {$_SESSION['char']=intval($_POST['char']);}
+if(empty($_POST['char'])){header('Location: selectchar.php');
+  die();}
+else{
+  $_SESSION['char']=intval($_POST['char']);}
+
 /*echo($_SESSION["char"]."<br>");
 echo("<br>");
 echo(gettype($_SESSION["char"]));*/
