@@ -2,10 +2,16 @@
 session_start();
 include_once("connection.php");
 print_r($_POST);
-if(empty($_POST['char'])){header('Location: selectchar.php');
-  die();}
+if(empty($_POST['char'])){}
 else{
-  $_SESSION['char']=intval($_POST['char']);}
+  $_SESSION['char']=$_POST['char'];
+}
+
+if(empty($_SESSION['char'])){
+  header('Location: selectchar.php');
+  die();
+}
+print_r($_SESSION['char']);
 
 /*echo($_SESSION["char"]."<br>");
 echo("<br>");
@@ -38,7 +44,7 @@ $_SESSION["charid"]=$_SESSION['char'];
 
 while ($row = $char->fetch(PDO::FETCH_ASSOC))
   {
-    array_push($charA, $row['CharName'], $row['Xp'], $row['BackgroundID'], $row['PlayerName'], $row['Strength'], $row['Dexterity']);
+    array_push($charA, $row['CharName'], $row['Xp'], $row['BackgroundID'], $row['PlayerName'], $row['Strength'], $row['Dexterity'], $row['Constitution'], $row['Intelligence'], $row['Wisdom'], $row['Charisma']);
   }
 
 $class = $conn->prepare("SELECT *
@@ -54,6 +60,14 @@ while ($row = $class->fetch(PDO::FETCH_ASSOC))
   {
     array_push($classA, $row['ClassID'], $row['ClassName']);
   }
+
+
+function setscore($num, $charA) {
+  echo('value="'.$charA[$num].'"/> ');
+  $mod=(intval($charA[$num])-10)/2;
+  if ($mod > -0.1){echo("+".round($mod,0,PHP_ROUND_HALF_DOWN));}
+  else{echo(round($mod,0,PHP_ROUND_HALF_UP));}
+}
 ?>
 
 
@@ -117,7 +131,7 @@ while ($row = $class->fetch(PDO::FETCH_ASSOC))
         <li>
           <label for="playername">Player Name: </label><input name="playername"
           <?php 
-          if (is_null($charA[3])){echo('placeholder="Matthew"');}
+          if (empty($charA[3])){echo('placeholder="Matthew"');}
           else{
           echo('value="'.$charA[3].'"');
           }
@@ -163,10 +177,7 @@ while ($row = $class->fetch(PDO::FETCH_ASSOC))
               <div class="score">
                 <label for="strengthscore">Strength</label><input name="strengthscore" 
                 <?php 
-                  echo('value="'.$charA[4].'"/> ');
-                  $strmod=(intval($charA[4])-10)/2;
-                  if ($strmod > -0.1){echo("+".round($strmod,0,PHP_ROUND_HALF_DOWN));}
-                  else{echo(round($strmod,0,PHP_ROUND_HALF_UP));}
+                  setscore(4, $charA)
                 ?>
               <div>
             </li>
@@ -174,46 +185,45 @@ while ($row = $class->fetch(PDO::FETCH_ASSOC))
             <div class="score">
                 <label for="dexterityscore">Dexterity</label><input name="dexterityscore" 
                 <?php 
-                  echo('value="'.$charA[5].'"/> ');
-                  $dexmod=(intval($charA[5])-10)/2;
-                  if ($dexmod > -0.1){echo("+".round($dexmod,0,PHP_ROUND_HALF_DOWN));}
-                  else{echo(round($dexmod,0,PHP_ROUND_HALF_UP));}
+                  setscore(5, $charA)
+                ?>
+              <div>
+            </li>
+            <li>
+            <div class="score">
+                <label for="constitutionscore">Constitution</label><input name="constitutionscore" 
+                <?php 
+                  setscore(6, $charA)
+                ?>
+              <div>
+            </li>
+            <li>
+            <div class="score">
+                <label for="intelligencescore">Intelligence</label><input name="intelligencescore" 
+                <?php 
+                  setscore(7, $charA)
                 ?>
               <div>
             </li>
             <li>
               <div class="score">
-                <label for="Constitutionscore">Constitution</label><input name="Constitutionscore" placeholder="10" />
-              </div>
-              <div class="modifier">
-                <input name="Constitutionmod" placeholder="+0" />
-              </div>
+                <label for="wisdomscore">Wisdom</label><input name="wisdomscore" 
+                <?php 
+                  setscore(8, $charA)
+                ?>
+              <div>
             </li>
             <li>
               <div class="score">
-                <label for="Wisdomscore">Wisdom</label><input name="Wisdomscore" placeholder="10" />
-              </div>
-              <div class="modifier">
-                <input name="Wisdommod" placeholder="+0" />
-              </div>
-            </li>
-            <li>
-              <div class="score">
-                <label for="Intelligencescore">Intelligence</label><input name="Intelligencescore" placeholder="10" />
-              </div>
-              <div class="modifier">
-                <input name="Intelligencemod" placeholder="+0" />
-              </div>
-            </li>
-            <li>
-              <div class="score">
-                <label for="Charismascore">Charisma</label><input name="Charismascore" placeholder="10" />
-              </div>
-              <div class="modifier">
-                <input name="Charismamod" placeholder="+0" />
-              </div>
+                <label for="charismascore">Charisma</label><input name="charismascore" 
+                <?php 
+                  setscore(9, $charA)
+                ?>
+              <div>
             </li>
           </ul>
+          Randomise (4d6 drop lowest): 
+          <input name="randomstat" type="checkbox" />
         </div>
         <div class="attr-applications">
           <div class="inspiration box">
@@ -224,9 +234,12 @@ while ($row = $class->fetch(PDO::FETCH_ASSOC))
           </div>
           <div class="proficiencybonus box">
             <div class="label-container">
-              <label for="proficiencybonus">Proficiency Bonus</label>
+              Proficiency Bonus: 
+              <?php
+              $_SESSION['profbonus']=2+floor(($level-1)/4);
+              echo('+'.$_SESSION['profbonus'])
+              ?>
             </div>
-            <input name="proficiencybonus" placeholder="+2" />
           </div>
           <div class="saves list-section box">
           <div class="label">

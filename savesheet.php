@@ -19,7 +19,63 @@ if (is_int(intval($_POST['dexterityscore']))){
     }
     else{$dexscore=10;}
 }
+else{$dexscore=10;}
 
+if (is_int(intval($_POST['constitutionscore']))){
+    if($_POST['constitutionscore']<31 and $_POST['constitutionscore']>-1){
+        $conscore=$_POST['constitutionscore'];
+    }
+    else{$conscore=10;}
+}
+else{$conscore=10;}
+
+if (is_int(intval($_POST['intelligencescore']))){
+    if($_POST['intelligencescore']<31 and $_POST['intelligencescore']>-1){
+        $intscore=$_POST['intelligencescore'];
+    }
+    else{$intscore=10;}
+}
+else{$intscore=10;}
+
+if (is_int(intval($_POST['wisdomscore']))){
+    if($_POST['wisdomscore']<31 and $_POST['wisdomscore']>-1){
+        $wisscore=$_POST['wisdomscore'];
+    }
+    else{$wisscore=10;}
+}
+else{$wisscore=10;}
+
+if (is_int(intval($_POST['charismascore']))){
+    if($_POST['charismascore']<31 and $_POST['charismascore']>-1){
+        $chascore=$_POST['charismascore'];
+    }
+    else{$chascore=10;}
+}
+else{$chascore=10;}
+
+if (empty($_POST['randomstat'])){}
+else{
+    $stats=array();
+    for ($x = 1; $x <= 6; $x++) {   
+        $tot=0;
+        $singlestat=array();
+        for ($y = 1; $y <= 4; $y++) {
+            array_push($singlestat, rand(1,6));
+        }
+        $key = array_search(min($singlestat), $singlestat);
+        unset($singlestat[$key]);
+        foreach($singlestat as $stat){
+            $tot=$tot+$stat;
+        }
+        array_push($stats, $tot);
+    }
+    $strscore=$stats[0];
+    $dexscore=$stats[1];
+    $conscore=$stats[2];
+    $intscore=$stats[3];
+    $wisscore=$stats[4];
+    $chascore=$stats[5];
+}
 
 $char = $conn->prepare("UPDATE `characters` 
 SET `Xp` = :xp, Charname = :charname, BackgroundID = :backgroundID, PlayerName = :playername, Strength = :strength, Dexterity = :dexterity, Constitution = :constitution, Intelligence = :intelligence, Wisdom = :wisdom, Charisma = :charisma

@@ -1,6 +1,7 @@
 <?php
 session_start();
 include_once("connection.php");
+$_SESSION['char']=NULL;
 if (isset($_SESSION['Role'])){}
 else {header("Location:Login.php");}
 
