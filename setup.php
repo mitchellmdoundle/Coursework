@@ -95,7 +95,8 @@ CREATE TABLE spells (
     Verbal INT(1),
     Somatic INT(1),
     Material VARCHAR(200),
-    RangeofSpell INT(6),
+    RangeofSpell VARCHAR(40),
+    RangeBounds INT(6),
     Splash VARCHAR(30),
     Conc TINYINT(1),
     Ritual TINYINT(1)
@@ -160,7 +161,7 @@ $nine = $conn->prepare("DROP TABLE IF EXISTS charhasclass;
 CREATE TABLE charhasclass (
     CharID INT(6) UNSIGNED PRIMARY KEY,
     ClassID INT(2) UNSIGNED,
-    CharLevel INT(4)
+    CharLevel INT(2)
 );
 ");
 $nine->execute();
