@@ -135,7 +135,7 @@ $six->closeCursor();
 
 $seven = $conn->prepare("DROP TABLE IF EXISTS class;
 CREATE TABLE class (
-    ClassID INT(4) UNSIGNED AUTO_INCREMENT PRIMARY KEY,
+    ClassID INT(2) UNSIGNED AUTO_INCREMENT PRIMARY KEY,
     ClassName VARCHAR(15),
     ProfNum INT(2),
     Hitdie INT(2),
@@ -159,7 +159,7 @@ $eight->closeCursor();
 $nine = $conn->prepare("DROP TABLE IF EXISTS charhasclass;
 CREATE TABLE charhasclass (
     CharID INT(6) UNSIGNED PRIMARY KEY,
-    ClassID INT(4) UNSIGNED,
+    ClassID INT(2) UNSIGNED,
     CharLevel INT(4)
 );
 ");
@@ -186,7 +186,7 @@ $eleven->closeCursor();
 
 $twelve = $conn->prepare("DROP TABLE IF EXISTS classhasspells;
 CREATE TABLE classhasspells (
-    ClassID INT(4) UNSIGNED,
+    ClassID INT(2) UNSIGNED,
     SpellID INT(4) UNSIGNED,
     PRIMARY KEY (ClassID,SpellID)
 );
@@ -216,7 +216,7 @@ $fourteen->closeCursor();
 
 $fifteen = $conn->prepare("DROP TABLE IF EXISTS classfeatures;
 CREATE TABLE classfeatures (
-    ClassID INT(4) UNSIGNED PRIMARY KEY,
+    ClassID INT(2) UNSIGNED PRIMARY KEY,
     CharLevel INT(2) UNSIGNED,
     Feature VARCHAR(3000)
 );
