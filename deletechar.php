@@ -10,6 +10,20 @@ if (isset($_POST['deletchar'])){
     ");
     $delete->bindParam(':charid', $_POST['deletchar']);
     $delete->execute();
+
+    $delete2 = $conn->prepare("DELETE
+    FROM charhasclass
+    WHERE CharID=:charid
+    ");
+    $delete2->bindParam(':charid', $_POST['deletchar']);
+    $delete2->execute();
+
+    $delete3 = $conn->prepare("DELETE
+    FROM charhasspell
+    WHERE CharID=:charid
+    ");
+    $delete3->bindParam(':charid', $_POST['deletchar']);
+    $delete3->execute();
 }
 
 echo("UserID is ".$_SESSION['loggedinuser'].".<br>");
