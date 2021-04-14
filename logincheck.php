@@ -8,24 +8,27 @@ try{
     $stmt->execute();
     while ($row = $stmt->fetch(PDO::FETCH_ASSOC))
     {
-    if ($row['Password']==$_POST['passwd']){
-        //echo('accepted');
-        $_SESSION["loggedinuser"]=$row["UserID"];
-        $_SESSION["Role"]=$row["Role"];
-        if ($row['Role']==0){
-            header('Location: selectchar.php');   
+        if ($row['Password']==$_POST['passwd'])
+        {
+            //echo('accepted');
+            $_SESSION["loggedinuser"]=$row["UserID"];
+            $_SESSION["Role"]=$row["Role"];
+            if ($row['Role']==0){
+                header('Location: selectchar.php');   
+            }
+            else if ($row['Role']==1){
+                header('Location: users.php');
+            }
         }
-        else if ($row['Role']==1){
-            header('Location: users.php');
+        else {
+            echo('Incorrect Credentials');
+            header("Refresh:2; url= login.php");
+            die();
         }
-    }
-    else {
-        echo('Incorrect Credentials');
-        header("Refresh:2; url= login.php");
-    }
     }   
     echo('Incorrect Credentials');
     header("Refresh:2; url= login.php");
+    die();
 }
 catch(PDOException $e)
     {
