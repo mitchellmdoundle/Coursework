@@ -4,6 +4,7 @@
 <?php
 include_once('connection.php');
 session_start();
+#this checks to see if the page has been reloaded with the request that only prepped spells are shown
 if(isset($_SESSION['prepspells'])){}
 else{$_SESSION['prepspells']=0;}
 print_r($_SESSION['prepspells']);
@@ -26,7 +27,7 @@ $preppedspells->execute();
 while ($row = $preppedspells->fetch(PDO::FETCH_ASSOC)){
   array_push($preppedspellsA,$row['SpellID']);
 }
-
+#this all created an array filled with all the spellIDs of spells that the user has saved as "prepared"
 ?>
 <table>
     <tr>

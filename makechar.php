@@ -2,6 +2,7 @@
 session_start();
 include_once("connection.php");
 header('Location: selectchar.php');
+#
 $makechars = $conn->prepare("INSERT INTO characters (UserID, CharName) 
     VALUES (:userid,:charname)
 ");

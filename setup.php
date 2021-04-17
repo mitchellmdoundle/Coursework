@@ -1,6 +1,7 @@
 <?php
 //header( "Location: http://localhost/Coursework/login.php" );
 include_once ("connection.php");
+#this entire page just exists to generate all the required relational databases for the project
 $one = $conn->prepare("DROP TABLE IF EXISTS users;
 CREATE TABLE users (
     UserID INT(4) UNSIGNED AUTO_INCREMENT PRIMARY KEY,

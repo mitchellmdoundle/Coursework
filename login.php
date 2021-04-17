@@ -15,7 +15,8 @@ $_SESSION = array();
 </body>
 </html>
 <?php
-include_once('connection.php');
+#this shows all the current user accounts, and was used in testing in order to remember the passwords.
+/*include_once('connection.php');
 $stmt = $conn->prepare("SELECT * FROM users");
 $stmt->execute();
 echo("<br>");
@@ -23,5 +24,5 @@ echo("ID: Username, Email, Admin?, Password<br>");
 while ($row = $stmt->fetch(PDO::FETCH_ASSOC))
 {
 echo($row["UserID"].': '.$row["Username"].', '.$row["Email"].', '.$row["Role"].', '.$row["Password"]."<br>");
-}
+}*/
 ?>

@@ -4,7 +4,8 @@ include_once("connection.php");
 header('Location: sheet.php');
 echo('xp '.$_POST['experiencepoints'].'<br>');
 echo('charid '.$_SESSION['charid'].'<br>');
-
+#this checks if each ability score is valid, and if it does, puts it in a variable to be put to a database later
+#on in the page.
 if (is_int(intval($_POST['strengthscore']))){
     if($_POST['strengthscore']<31 and $_POST['strengthscore']>-1){
         $strscore=$_POST['strengthscore'];
@@ -52,7 +53,8 @@ if (is_int(intval($_POST['charismascore']))){
     else{$chascore=10;}
 }
 else{$chascore=10;}
-
+#this is the code that randomises stats using 4d6 drop lowest. it loops 6 times rolling stats, then assigns them in order
+#to each stat
 if (empty($_POST['randomstat'])){}
 else{
     $stats=array();
@@ -76,7 +78,7 @@ else{
     $wisscore=$stats[4];
     $chascore=$stats[5];
 }
-
+#this is the code that updates the database with the new information put into the character sheet when it's updated
 $char = $conn->prepare("UPDATE `characters` 
 SET `Xp` = :xp, Charname = :charname, BackgroundID = :backgroundID, PlayerName = :playername, Strength = :strength, Dexterity = :dexterity, Constitution = :constitution, Intelligence = :intelligence, Wisdom = :wisdom, Charisma = :charisma
 WHERE `characters`.`CharID` = :chara
@@ -93,7 +95,7 @@ $char->bindParam(':intelligence', $intscore);
 $char->bindParam(':wisdom', $wisscore);
 $char->bindParam(':charisma', $chascore);
 $char->execute();
-
+#this updates a character's class to be whatever it is meant to be
 $charclass = $conn->prepare("UPDATE `charhasclass` 
 SET `ClassID` = :class, `CharLevel` = :levels
 WHERE `charhasclass`.`CharID` = :chara

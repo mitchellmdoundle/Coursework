@@ -2,16 +2,12 @@
 session_start();
 include_once("connection.php");
 print_r($_POST);
-if(empty($_POST['char'])){}
+if(empty($_POST['char'])){
+  header('Location: selectchar.php');
+  die();}
 else{
   $_SESSION['char']=$_POST['char'];
 }
-
-if(empty($_SESSION['char'])){
-  header('Location: selectchar.php');
-  die();
-}
-print_r($_SESSION['char']);
 
 /*echo($_SESSION["char"]."<br>");
 echo("<br>");

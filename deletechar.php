@@ -3,6 +3,7 @@ session_start();
 include_once("connection.php");
 if (isset($_SESSION['Role'])){}
 else {header("Location:Login.php");}
+#this code only triggers if the page is refreshed with a character to be deleted so that a new page doesn't have to be created
 if (isset($_POST['deletchar'])){
     $delete = $conn->prepare("DELETE
     FROM characters
@@ -26,7 +27,7 @@ if (isset($_POST['deletchar'])){
     $delete3->execute();
 }
 
-echo("UserID is ".$_SESSION['loggedinuser'].".<br>");
+#echo("UserID is ".$_SESSION['loggedinuser'].".<br>");
 
 $stmt2 = $conn->prepare("SELECT characters.CharID as charid, characters.CharName as charname, UserID as user
 FROM characters
@@ -42,6 +43,7 @@ $stmt2->execute();
 <form action="deletechar.php" method="post"> 
   <select name="deletchar" id="deletchar">
   <?php
+  #this populates a dropdown list with all of a person's characters, so that if they pick one, they can be deleted
   while ($row = $stmt2->fetch(PDO::FETCH_ASSOC))
   {
     echo('<option value="'.$row['charid'].'">'.$row['charname'].'</option>');

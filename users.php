@@ -23,7 +23,7 @@ echo("<br>");
 echo("ID: Username, Email, Admin?, Password<br>");
 while ($row = $stmt->fetch(PDO::FETCH_ASSOC))
 {
-echo($row["UserID"].': '.$row["Username"].', '.$row["Email"].', '.$row["Role"].', '.$row["Password"]."<br>");
+echo($row["UserID"].': '.$row["Username"].', '.$row["Email"].', '.$row["Role"].' <br>');
 }
 ?>
 <a href="http://localhost/Coursework/selectchar.php">Characters</a><br>
